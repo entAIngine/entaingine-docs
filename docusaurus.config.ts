@@ -8,10 +8,10 @@ const config: Config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
+  url: 'https://entaingine-docs.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: '/entaingine-docs/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -39,7 +39,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/entAIngine/entaingine-docs/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/entAIngine/entaingine-docs/tree/main/',
         },
         blog: false,
         // blog: {
@@ -60,7 +60,7 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'entAIngine',
+      title: 'entAIngine wiki',
       logo: {
         alt: 'entAIngine Logo',
         src: 'img/logo.svg',
@@ -119,7 +119,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Jaden Data, GmbH. Built by entAIngine.`,
+      copyright: `Copyright © ${new Date().getFullYear()} entAIngine`,
     },
     prism: {
       theme: prismThemes.github,
