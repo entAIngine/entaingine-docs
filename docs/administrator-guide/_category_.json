@@ -1,0 +1,8 @@
+{
+    "label": "Administrator Guide",
+    "position": 10,
+    "link": {
+      "type": "generated-index",
+      "description": "Guides for administrators managing entAIngine."
+    }
+  }
