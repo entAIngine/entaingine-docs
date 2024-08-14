@@ -4,6 +4,7 @@ title: Process API Documentation
 
 ---
 
+
 # Process API
 
 This API provides endpoints for managing processes using Machine-to-Machine communication. The following documentation explains how to use the API, including detailed descriptions of each endpoint and the Data Transfer Objects (DTOs) used.
