@@ -1,7 +1,6 @@
 ---
 sidebar_position: 1
 title: Process API Documentation
-
 ---
 
 # Process API
@@ -58,7 +57,8 @@ Creates a new process based on the provided `ProcessRequestDTO`.
 
 **Endpoint:** `POST /api/v1/m2m/processes`
 
-**Request Body:**
+<Tabs>
+<TabItem value="Request Body" label="Request Body">
 
 ```json
 {
@@ -75,7 +75,9 @@ Creates a new process based on the provided `ProcessRequestDTO`.
 }
 ```
 
-**Response:**
+</TabItem>
+
+<TabItem value="Response" label="Response">
 
 ```json
 {
@@ -94,15 +96,17 @@ Creates a new process based on the provided `ProcessRequestDTO`.
 }
 ```
 
+</TabItem>
+</Tabs>
+
 ### Get a Process by ID
 
 Retrieves the process details based on the provided ID.
 
 **Endpoint:** `GET /api/v1/m2m/processes/{id}`
 
-**Response:**
+<CodeBlock language="json">
 
-```json
 {
   "id": 1,
   "description": "Data processing workflow",
@@ -117,7 +121,8 @@ Retrieves the process details based on the provided ID.
   "lastUpdated": "2023-01-01T10:00:00Z",
   "totalExecutionTime": 120000
 }
-```
+
+</CodeBlock>
 
 ### Get Inputs for a Process
 
@@ -125,9 +130,8 @@ Retrieves the list of inputs for the specified process ID.
 
 **Endpoint:** `GET /api/v1/m2m/processes/{id}/inputs`
 
-**Response:**
+<CodeBlock language="json">
 
-```json
 [
   {
     "id": 1,
@@ -135,7 +139,8 @@ Retrieves the list of inputs for the specified process ID.
     "value": "sample_value"
   }
 ]
-```
+
+</CodeBlock>
 
 ### Get Outputs for a Process
 
@@ -143,9 +148,8 @@ Retrieves the list of outputs for the specified process ID.
 
 **Endpoint:** `GET /api/v1/m2m/processes/{id}/tasks/outputs`
 
-**Response:**
+<CodeBlock language="json">
 
-```json
 {
   "outputs": [
     {
@@ -166,12 +170,16 @@ Retrieves the list of outputs for the specified process ID.
   "isFailed": false,
   "totalExecutionTime": 120000
 }
-```
+
+</CodeBlock>
 
 ## Data Transfer Objects (DTOs)
 
+This section provides detailed descriptions of the DTOs used in the Process API.
 
-This section provides detailed descriptions of the DTOs used in the Process API. Understanding these objects and their fields is essential for making accurate API requests and interpreting responses.
+:::note
+Understanding these objects and their fields is essential for making accurate API requests and interpreting responses.
+:::
 
 ### InputDTO
 
