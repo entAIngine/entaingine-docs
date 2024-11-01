@@ -8,7 +8,7 @@ title: Process API Documentation
 
 This API provides endpoints for managing processes using Machine-to-Machine communication. The following documentation explains how to use the API, including detailed descriptions of each endpoint and the Data Transfer Objects (DTOs) used.
 
-[View the Public API Documentation](https://d1wezafd7fvhpd.cloudfront.net/prod/aiengine/swagger-ui/index.html#)
+[View the Public API Documentation](https://api.entaingine.com/aiengine/swagger-ui/index.html#)
 
 ## Authentication
 
@@ -24,7 +24,7 @@ Authorization: Bearer 0123a.abcd1234TestAPIkey
 
 ```bash
 curl -X 'POST' \
-  'https://d1wezafd7fvhpd.cloudfront.net/prod/aiengine/api/v1/m2m/processes' \
+  'https://api.entaingine.com/aiengine/api/v1/m2m/processes' \
   -H 'accept: application/json' \
   -H 'Authorization: Bearer 0123a.abcd1234TestAPIkey' \
   -H 'Content-Type: application/json' \
