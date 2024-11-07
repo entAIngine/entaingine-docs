@@ -3,6 +3,9 @@ sidebar_position: 1
 title: Process API Documentation
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Process API
 
 This API provides endpoints for managing processes using Machine-to-Machine communication. The following documentation explains how to use the API, including detailed descriptions of each endpoint and the Data Transfer Objects (DTOs) used.
@@ -16,10 +19,14 @@ To make REST calls, you need to pass an API Key generated from the Frontend Comp
 Include the API Key in the `Authorization` header of your request as follows:
 
 ```http
+
 Authorization: Bearer 0123a.abcd1234TestAPIkey
+
 ```
 
 ### Example Request
+
+Here’s the adjusted code snippet using triple backticks for compatibility with MDX:
 
 ```bash
 curl -X 'POST' \
@@ -105,8 +112,7 @@ Retrieves the process details based on the provided ID.
 
 **Endpoint:** `GET /api/v1/m2m/processes/{id}`
 
-<CodeBlock language="json">
-
+```json
 {
   "id": 1,
   "description": "Data processing workflow",
@@ -121,8 +127,7 @@ Retrieves the process details based on the provided ID.
   "lastUpdated": "2023-01-01T10:00:00Z",
   "totalExecutionTime": 120000
 }
-
-</CodeBlock>
+```
 
 ### Get Inputs for a Process
 
@@ -130,8 +135,7 @@ Retrieves the list of inputs for the specified process ID.
 
 **Endpoint:** `GET /api/v1/m2m/processes/{id}/inputs`
 
-<CodeBlock language="json">
-
+```json
 [
   {
     "id": 1,
@@ -139,8 +143,7 @@ Retrieves the list of inputs for the specified process ID.
     "value": "sample_value"
   }
 ]
-
-</CodeBlock>
+```
 
 ### Get Outputs for a Process
 
@@ -148,8 +151,7 @@ Retrieves the list of outputs for the specified process ID.
 
 **Endpoint:** `GET /api/v1/m2m/processes/{id}/tasks/outputs`
 
-<CodeBlock language="json">
-
+```json
 {
   "outputs": [
     {
@@ -170,8 +172,7 @@ Retrieves the list of outputs for the specified process ID.
   "isFailed": false,
   "totalExecutionTime": 120000
 }
-
-</CodeBlock>
+```
 
 ## Data Transfer Objects (DTOs)
 
@@ -246,7 +247,6 @@ The `ProcessResponseDTO` extends `ProcessDTO` with additional fields.
 ---
 
 This detailed description of the DTOs should help you understand how to structure your API requests and interpret the responses effectively.
-```
 
 ## Error Handling
 
