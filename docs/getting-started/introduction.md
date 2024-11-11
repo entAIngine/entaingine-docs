@@ -2,31 +2,21 @@
 sidebar_position: 1
 ---
 
-# Welcome to entAIngine
+# Introduction to entAIngine Onboarding
 
-Welcome to the **entAIngine onboarding and crash course**! This guide will take you step-by-step through getting started with entAIngine and building your first enterprise-grade generative AI applications.
+Welcome to the entAIngine onboarding and crash course. This guide will take you step-by-step through getting started with entAIngine and building your first enterprise-grade generative AI applications. You will learn how to:
 
-### Objectives
-
-By the end of this guide, you will be able to:
-- Utilize different AI models
-- Apply retrieval-augmented generation (RAG)
-- Use the entAIngine API
+- Utilize different models
+- Apply retrieval-augmented generation
+- Use the API
 - Create effective prompts
-- Develop complex, multi-step processes
+- Develop complex multi-step processes
 
-Explore the possibilities with **entAIngine** and start building powerful AI-driven applications for enterprise needs.
+## Getting Started
 
----
+To begin, you will need an account and an organization within entAIngine. Please follow the link below or visit [www.entAIngine.com](https://www.entAIngine.com) to contact us to create your account and set up your organization.
 
-### Documentation Structure
+[Schedule an Introduction](https://calendly.com/the-real-marcel-mueller/ai-entaingine-intro)
 
-This documentation is organized into the following sections:
-1. **Getting Started**: Account setup and organization creation.
-2. **Developing a Process Mindset**: Key concepts for creating effective AI-driven workflows.
-3. **Building Your First Process**: Step-by-step guide to creating a process for real-world applications.
-4. **Advanced Features**: Techniques like RAG and multi-model workflows.
-
-Let’s dive in and get started with setting up your account in the next section!
 
 
