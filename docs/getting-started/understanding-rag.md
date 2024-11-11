@@ -1,3 +1,7 @@
+---
+sidebar_position: 9
+---
+
 # Understanding Retrieval-Augmented Generation (RAG)
 
 Large language models (LLMs) can do a lot and enable many applications, but there are scenarios where LLMs fall short. This often happens when you need to leverage private knowledge, update information periodically, or work with very large knowledge bases. This is why we use retrieval-augmented generation (RAG) — a powerful approach for integrating dynamic and private information with generative AI.
