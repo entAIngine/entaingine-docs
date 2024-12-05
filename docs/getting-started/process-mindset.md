@@ -12,11 +12,15 @@ Building AI applications for enterprise use requires more than simple chat inter
 
 Instead of just a "prompt-answer" interaction cycle, think of application building as a series of orchestrated steps, each designed to accomplish a specific goal. For instance, the user triggers a multi-step process involving different models, possibly even multimodal inputs, to generate a more effective output. Integrating retrieval-augmented generation (RAG) and minimizing human input allows you to create more powerful and automated workflows.
 
+<img src="/img/getting-started/interactive-chat-and-orchestration.png" alt="orchestration"/>
+
 ## Understanding Process-Driven Thinking
 
 Every business activity can be thought of as a process. These processes may not always be well-documented, but they are a series of actions that lead to a specific outcome. The "divide and conquer" approach is an essential mindset for creating successful AI-driven workflows. It encourages breaking down complex tasks into smaller, manageable steps that can be efficiently executed by models.
 
 For example, imagine creating a project proposal for a request for proposals (RFP). This process involves several steps: gathering material, reviewing past references, sketching a concept, and writing sections like the introduction or related work. Instead of tackling the entire project at once, break it down into individual tasks, allowing the language model to perform each part more effectively. This helps ensure high quality and efficiency throughout the entire process.
+
+<img src="/img/getting-started/rfp-example.png" alt="rfp example"/>
 
 ## Reusable Process Templates
 
@@ -26,6 +30,8 @@ We distinguish between two types of inputs in these templates:
 
 - **Case-Specific Input**: Unique data that varies from case to case. For example, each RFP document contains specific requirements that need to be addressed individually.
 - **Case-Independent Input**: Data that remains constant across different cases. For example, a database of past projects or standard reference materials can be reused.
+
+<img src="/img/getting-started/case-inputs.png" alt="case inputs"/>
 
 By building templates that account for both input types, you can efficiently handle different scenarios without compromising quality.
 
@@ -38,6 +44,8 @@ To enhance efficiency, it is crucial to define which model to use for each step 
 ## Moving Beyond Chat Interfaces
 
 While chat interfaces can be useful for creative tasks and one-off scenarios, they are often not the best solution for repeatable tasks requiring consistency across an entire organization. For these types of tasks, a chat interface may be too limiting. Instead, it’s more effective to design applications that can trigger complex processes automatically and deliver the required output.
+
+<img src="/img/getting-started/interaction-and-process-trigers.png" alt="interaction and process trigers"/>
 
 For instance, you could use entAIngine’s auto-generated frontends or API-triggered processes to handle tasks like automated invoice analysis. Such workflows eliminate the need for repeated manual interaction, enabling you to feed in case-specific information and deliver consistent results in the right format at the right time.
 

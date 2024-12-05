@@ -37,6 +37,8 @@ The first step in creating a RAG pipeline is **chunking** — dividing large doc
 
 The vectors are stored in a vector database, which allows for efficient semantic searches. When a query is made, the system searches through these vectors to find the chunks that are semantically closest to the query. This enables us to provide highly relevant information without relying solely on the LLM's pre-trained knowledge.
 
+<img src="/img/getting-started/how-rag-works.png" alt="how rag works"/>
+
 ### Embedding and Vector Representation
 
 An embedding model translates each chunk into a vector, capturing the semantic meaning of the text. These vectors are then stored in a vector database. For example, similar sentences like "a little boy is walking" and "a little boy is running" will have similar vector representations, allowing the system to recognize their semantic closeness.

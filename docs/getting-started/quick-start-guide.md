@@ -15,6 +15,8 @@ To begin using entAIngine, you’ll need an account and an organization. Please 
    - After receiving access, log in to your entAIngine account.
    - The organization and spaces will be automatically created for you.
 
+   <img src="/img/getting-started/account-and-organization.jpg" alt="account and organization"/>
+
 > **Note**: If you encounter any issues during setup, reach out to our support team via the Contact page.
 
 Once your account and organization are set up, you’re ready to start building applications. In the next section, we’ll explore the **process mindset** essential for effective AI application development.
