@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+unlisted: true
 ---
 
 # Custom Integrations and Extensions
