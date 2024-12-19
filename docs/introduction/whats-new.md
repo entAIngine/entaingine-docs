@@ -1,5 +1,6 @@
 ---
 sidebar_position: 2
+unlisted: true
 ---
 
 # What's New

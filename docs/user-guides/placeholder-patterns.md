@@ -10,7 +10,7 @@ Placeholders are always marked using curly brackets `{}` in the prompt. Dependin
 
 The example below shows a placeholder for an Input Template. The placeholder `{FILE_CONTENT}` will be replaced with the parsed content of the uploaded file at runtime. In case the file contains the sequence for another `{PLACEHOLDER_FOR_INPUT_TEMPLATE}`, that placeholder will not get resolved.
 
-![Placeholder for Input Templates](img/user-guides_placeholder-patterns_inputTemplates.png)
+![Placeholder for Input Templates](/img/user-guide/user-guides_placeholder-patterns_inputTemplates.png)
 
 The following subsection describe the syntax for the different kinds of placeholders and their behaviour.
 
@@ -22,7 +22,7 @@ The placeholders for the Input Templates must always be in `{SNAKE_CASE}`. The p
 
 When you chain tasks by drawing an edge between them, the placeholder `{task_x.output_0}` is used internally. Whereas the `x`is used to denote the logical position of the task inside the process template (starting at 0). You can check the logical position of the task by clicking on the `i`-icon on the respective node. You do not have to dive deeper into those placeholders, in case you are just chaining simple text completion tasks. We are taking care of the placeholders for you.
 
-![Simple chaining with an edge](/img/user-guides_placeholder-patterns_simple-chaining.png)
+![Simple chaining with an edge](/img/user-guide/user-guides_placeholder-patterns_simple-chaining.png)
 
 Whenever you are working with tasks that generate multiple outputs (e.g. by setting the amounts of images to be generated or top_k for vector store retrieval tasks to >1), or you want to access structured metadata from certain tasks (metadata from retrieval tasks), you can use the following placeholder patterns manually to finish the job:
 
@@ -34,7 +34,7 @@ Whenever you are working with tasks that generate multiple outputs (e.g. by sett
 
 The example below uses an edge between the Vector Store Retrieval Task and the Text Completion Task. This will use the chunk text from the top result. Though, the other results are not incorporated by just using an edge.
 
-![Vector Store Retrieval Placeholders](/img/user-guides_placeholder-pattern_vector-store-retrieval.png)
+![Vector Store Retrieval Placeholders](/img/user-guide/user-guides_placeholder-pattern_vector-store-retrieval.png)
 
 More patterns are available to reference outputs from Vector Store Retrieval Tasks:
 
