@@ -66,3 +66,14 @@ For enterprises looking to harness the power of generative AI in a secure, scala
 ## Next Steps
 
 To get started with building your own RAG pipeline, explore our detailed guides on setting up vector databases, choosing the right embedding models, and integrating retrieval mechanisms into your existing workflows. RAG can transform how your organization leverages AI, enabling more accurate, efficient, and traceable insights.
+
+<div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
+  <iframe
+    src="https://www.youtube.com/embed/D-o_keTzVj8"
+    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+    title="YouTube video"
+  ></iframe>
+</div>
