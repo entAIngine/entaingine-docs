@@ -2,6 +2,19 @@
 sidebar_position: 6
 ---
 
+You can either watch the video tutorial for a quick walkthrough or follow the step-by-step written instructions below for more detailed guidance.
+
+<div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
+  <iframe
+    src="https://www.youtube.com/embed/fkZQRKwIcIc"
+    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+    title="YouTube video"
+  ></iframe>
+</div>
+
 # Application Setup in entAIngine
 
 To begin, log in to entAIngine Studio by visiting www.studio.entaingine.com. If you don't yet have an account, please visit www.entAIngine.com to request one.
@@ -45,15 +58,3 @@ Next, define the variables for the template:
   - This variable is used to identify the **relevant department** and is also an input to the process.
 
 These variables will help manage the inputs for each process instance.
-
-<div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
-  <iframe
-    src="https://www.youtube.com/embed/fkZQRKwIcIc"
-    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-    frameBorder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowFullScreen
-    title="YouTube video"
-  ></iframe>
-</div>
-

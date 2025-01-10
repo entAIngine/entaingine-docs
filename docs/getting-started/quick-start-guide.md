@@ -1,6 +1,20 @@
 ---
 sidebar_position: 2
 ---
+
+Welcome! Start by watching the introductory video, then follow the step-by-step guide below.
+
+<div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
+  <iframe
+    src="https://www.youtube.com/embed/g4RSl14jJDY"
+    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+    title="YouTube video"
+  ></iframe>
+</div>
+
 # Getting Started with entAIngine
 
 Welcome to the entAIngine onboarding and crash course. This guide will take you step-by-step through getting started with entAIngine and building your first enterprise-grade generative AI applications. You will learn how to:
@@ -31,15 +45,3 @@ To begin using entAIngine, you’ll need an account and an organization. Please 
 > **Note**: If you encounter any issues during setup, reach out to our support team via the Contact page.
 
 Once your account and organization are set up, you’re ready to start building applications. In the next section, we’ll explore the **process mindset** essential for effective AI application development.
-
-<div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
-  <iframe
-    src="https://www.youtube.com/embed/g4RSl14jJDY"
-    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-    frameBorder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowFullScreen
-    title="YouTube video"
-  ></iframe>
-</div>
-
