@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+unlisted: true
 ---
 
 # Introduction to entAIngine Onboarding
@@ -17,6 +18,7 @@ Welcome to the entAIngine onboarding and crash course. This guide will take you 
 To begin, you will need an account and an organization within entAIngine. Please follow the link below or visit [www.entAIngine.com](https://www.entAIngine.com) to contact us to create your account and set up your organization.
 
 [Schedule an Introduction](https://calendly.com/the-real-marcel-mueller/ai-entaingine-intro)
+
 
 
 

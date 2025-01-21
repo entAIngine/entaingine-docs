@@ -1,12 +1,13 @@
 ---
 sidebar_position: 5
+unlisted: true
 ---
 
-# Invoice Controlling Example
+## Invoice Controlling Example
 
 This example showcases how entAIngine can simplify a real-world finance workflow through automation.
 
-## Scenario: Invoice Processing
+### Scenario: Invoice Processing
 
 In a typical mid-sized company, the Chief Financial Officer (CFO) needs to review numerous invoices monthly, each potentially linked to different projects across departments. The key actions in this process are:
 1. **Identifying Responsibility**: Determine which department and project are associated with each invoice.

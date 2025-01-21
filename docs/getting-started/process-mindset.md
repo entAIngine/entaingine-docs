@@ -2,6 +2,19 @@
 sidebar_position: 3
 ---
 
+You can either watch the video tutorial for a quick walkthrough or follow the step-by-step written instructions below for more detailed guidance.
+
+<div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
+  <iframe
+    src="https://www.youtube.com/embed/UErHfPkFDyo"
+    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+    title="YouTube video"
+  ></iframe>
+</div>
+
 # Developing a Process Mindset
 
 Before building your first application, it is essential to adopt what we call the "process mindset." This mindset is critical for creating enterprise-grade AI solutions that are process-centric and impact-driven, rather than just building basic chatbots. In this guide, we will discuss the key elements of the process mindset, including multi-step orchestration, reusable templates, and effective model customization.
@@ -54,4 +67,3 @@ The ultimate goal of adopting a process mindset is to move beyond just creating 
 ---
 
 Next, let’s build your first process with entAIngine!
-
