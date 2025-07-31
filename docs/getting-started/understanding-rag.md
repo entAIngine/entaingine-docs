@@ -2,6 +2,19 @@
 sidebar_position: 9
 ---
 
+You can either watch the video tutorial for a quick walkthrough or follow the step-by-step written instructions below for more detailed guidance.
+
+<div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
+  <iframe
+    src="https://www.youtube.com/embed/D-o_keTzVj8"
+    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+    title="YouTube video"
+  ></iframe>
+</div>
+
 # Understanding Retrieval-Augmented Generation (RAG)
 
 Large language models (LLMs) can do a lot and enable many applications, but there are scenarios where LLMs fall short. This often happens when you need to leverage private knowledge, update information periodically, or work with very large knowledge bases. This is why we use retrieval-augmented generation (RAG) — a powerful approach for integrating dynamic and private information with generative AI.
