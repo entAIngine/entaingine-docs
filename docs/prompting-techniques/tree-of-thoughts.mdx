@@ -1,0 +1,28 @@
+---
+title: Tree of Thoughts
+slug: /prompting-techniques/tree-of-thoughts
+sidebar_position: 8
+description: Explore multiple reasoning paths for better solutions.
+---
+
+Tree of Thoughts prompting explores several possible reasoning paths in parallel, allowing the model to consider and compare different solutions.
+
+**Use when:**
+- The task is open-ended or benefits from exploring alternatives
+- You want to improve solution quality by comparing options
+
+**Pattern:**
+1. Ask the model to generate multiple possible solutions or reasoning paths.
+2. Evaluate or compare the options to select the best one.
+
+**Examples:**
+```text
+List three different ways to solve this puzzle, then choose the best approach and explain why.
+```
+```text
+Propose several strategies for increasing user engagement on a website. Compare their pros and cons and recommend one.
+```
+
+**Pitfalls:**
+- Can increase response length and complexity
+- May require additional evaluation to select the best path

@@ -1,0 +1,36 @@
+---
+title: Few-Shot Prompting
+slug: /prompting-techniques/few-shot
+sidebar_position: 3
+description: Guide the model with a few examples to shape its output.
+---
+
+Few-shot prompting provides the model with several examples before asking it to perform a similar task.
+
+**Use when:**
+- The task benefits from context or demonstration
+- You want to guide the model’s style or format
+
+**Pattern:**
+Show 2–5 examples, then prompt the model to continue in the same way.
+
+**Examples:**
+```text
+Q: What is the capital of France?
+A: Paris
+Q: What is the capital of Germany?
+A: Berlin
+Q: What is the capital of Italy?
+A:
+```
+```text
+Correct the grammar:
+Input: "She go to school every day."
+Output: She goes to school every day.
+Input: "They is playing outside."
+Output:
+```
+
+**Pitfalls:**
+- Too many examples can exceed context limits
+- Examples should be relevant and clear

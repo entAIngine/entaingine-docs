@@ -1,0 +1,30 @@
+---
+title: Self-Consistency
+slug: /prompting-techniques/self-consistency
+sidebar_position: 5
+description: Generate multiple solutions and select the most consistent answer.
+---
+
+Self-consistency prompting generates several responses to the same prompt and selects the answer that appears most frequently or is most consistent.
+
+**Use when:**
+- The task is ambiguous or has multiple possible answers
+- You want to improve reliability by aggregating outputs
+
+**Pattern:**
+Ask the model the same question multiple times, then choose the most common or consistent answer.
+
+**Examples:**
+```text
+What is the next number in the sequence: 2, 4, 8, 16, ...?
+(Repeat the prompt several times and select the most frequent answer.)
+```
+```text
+Classify this review as positive or negative:
+"The product exceeded my expectations."
+(Ask multiple times and use the majority label.)
+```
+
+**Pitfalls:**
+- Increases computational cost
+- May not resolve ambiguity if the model is inconsistent

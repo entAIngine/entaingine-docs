@@ -1,0 +1,28 @@
+---
+title: PAL (Program-Aided Language)
+slug: /prompting-techniques/pal
+sidebar_position: 14
+description: Use code or programs to help the model solve problems.
+---
+
+PAL prompting involves generating code or structured logic to help solve a problem, then using the output to answer the original question.
+
+**Use when:**
+- The task involves calculations, logic, or structured data
+- You want to improve accuracy with programmatic reasoning
+
+**Pattern:**
+1. Ask the model to write code or logic to solve the problem.
+2. Use the code’s output as the answer.
+
+**Examples:**
+```text
+Write a Python function to calculate the factorial of 7. What is the result?
+```
+```text
+Generate a short script to count the number of words in this paragraph: "Artificial intelligence is transforming many industries."
+```
+
+**Pitfalls:**
+- Requires code execution environment
+- Errors in code generation can affect results

@@ -1,0 +1,30 @@
+---
+title: Multimodal Chain-of-Thought
+slug: /prompting-techniques/multimodal-cot
+sidebar_position: 16
+description: Combine text and images for stepwise reasoning.
+---
+
+Multimodal Chain-of-Thought (CoT) prompting combines text and images to guide the model through step-by-step reasoning.
+
+**Use when:**
+- The task involves both visual and textual information
+- You want the model to reason about images and text together
+
+**Pattern:**
+1. Present an image and a related question.
+2. Ask the model to explain its reasoning step by step, referencing both modalities.
+
+**Examples:**
+```text
+[Image: bar chart of sales by month]
+Question: Which month had the highest sales? Explain your answer step by step.
+```
+```text
+[Image: map of Europe]
+Question: Which countries border Germany? List them and explain how you identified them from the map.
+```
+
+**Pitfalls:**
+- Requires models capable of processing images and text
+- May be limited by input format or model capabilities

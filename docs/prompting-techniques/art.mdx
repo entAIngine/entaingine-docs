@@ -1,0 +1,28 @@
+---
+title: ART (Automatic Reasoning and Tool-use)
+slug: /prompting-techniques/art
+sidebar_position: 10
+description: Combine reasoning with tool use for complex tasks.
+---
+
+ART prompting enables the model to reason through a problem and use external tools (like calculators or APIs) to reach a solution.
+
+**Use when:**
+- The task requires both reasoning and external computation or lookup
+- You want the model to use tools to improve accuracy
+
+**Pattern:**
+1. Ask the model to break down the problem and identify when to use a tool.
+2. Use the tool’s output to inform the final answer.
+
+**Examples:**
+```text
+Calculate the square root of 245. (Model decides to use a calculator tool.)
+```
+```text
+Find the current weather in Paris and suggest an outfit for today. (Model queries a weather API, then reasons about clothing.)
+```
+
+**Pitfalls:**
+- Requires integration with external tools
+- May fail if tool use is not well-defined

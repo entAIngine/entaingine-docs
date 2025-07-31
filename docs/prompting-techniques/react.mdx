@@ -1,0 +1,36 @@
+---
+title: ReAct
+slug: /prompting-techniques/react
+sidebar_position: 15
+description: Integrate reasoning and action for interactive tasks.
+---
+
+ReAct prompting alternates between reasoning steps and taking actions, such as querying a tool or environment, to solve a problem interactively.
+
+**Use when:**
+- The task requires both reasoning and interaction with external tools or data
+- You want the model to explain its process as it acts
+
+**Pattern:**
+1. Ask the model to reason about the problem.
+2. Take an action (e.g., query a tool), then continue reasoning based on the result.
+
+**Examples:**
+```text
+Question: What is the population of Japan?
+Thought: I need to look up the latest data.
+Action: Search for "current population of Japan."
+Observation: The population is about 125 million.
+Answer: The population of Japan is approximately 125 million.
+```
+```text
+Question: What’s the weather in New York?
+Thought: I should check a weather service.
+Action: Query weather API for New York.
+Observation: It’s 22°C and sunny.
+Answer: It’s 22°C and sunny in New York.
+```
+
+**Pitfalls:**
+- Requires integration with external tools or APIs
+- Can be complex to implement in practice

@@ -1,0 +1,27 @@
+---
+title: Chain-of-Thought Prompting
+slug: /prompting-techniques/chain-of-thought
+sidebar_position: 4
+description: Encourage step-by-step reasoning for complex tasks.
+---
+
+Chain-of-thought prompting asks the model to explain its reasoning step by step before giving an answer.
+
+**Use when:**
+- The task requires logical reasoning or multi-step thinking
+- You want to see the model’s thought process
+
+**Pattern:**
+Ask the model to “think step by step” or “explain your reasoning.”
+
+**Examples:**
+```text
+If there are 3 apples and you take away 2, how many are left? Explain your reasoning.
+```
+```text
+A train leaves the station at 3 PM and travels at 60 km/h. Another train leaves at 4 PM at 80 km/h. When will the second train catch up? Show your calculations step by step.
+```
+
+**Pitfalls:**
+- May generate unnecessary details for simple tasks
+- Can increase response length

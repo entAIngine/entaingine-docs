@@ -1,0 +1,31 @@
+---
+title: Prompt Chaining
+slug: /prompting-techniques/prompt-chaining
+sidebar_position: 7
+description: Link multiple prompts to solve multi-step problems.
+---
+
+Prompt chaining breaks a complex task into smaller steps, using the output of one prompt as the input for the next.
+
+**Use when:**
+- The task is too complex for a single prompt
+- You want to structure multi-step reasoning or workflows
+
+**Pattern:**
+1. Prompt the model for the first step.
+2. Use the output as input for the next step, and repeat as needed.
+
+**Examples:**
+```text
+Step 1: Summarize the following article.
+[Paste article]
+Step 2: List three key takeaways from the summary above.
+```
+```text
+Step 1: Extract all dates from this text.
+Step 2: For each date, explain its significance in the context of the text.
+```
+
+**Pitfalls:**
+- Errors can compound across steps
+- Requires careful management of intermediate outputs

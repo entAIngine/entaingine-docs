@@ -1,0 +1,32 @@
+---
+title: Graph Prompting
+slug: /prompting-techniques/graph-prompting
+sidebar_position: 17
+description: Structure prompts as graphs to represent relationships and dependencies.
+---
+
+Graph prompting organizes information or tasks as nodes and edges, helping the model reason about relationships and dependencies.
+
+**Use when:**
+- The task involves complex relationships or dependencies
+- You want to visualize or structure information for better reasoning
+
+**Pattern:**
+1. Present information as a graph (nodes and edges) or describe relationships explicitly.
+2. Ask the model to reason about or traverse the graph to answer questions.
+
+**Examples:**
+```text
+Given the following relationships:
+A is a friend of B. B is a colleague of C. C is a neighbor of D.
+Who is connected to D through two steps?
+```
+```text
+Here is a dependency graph for a project:
+Task 1 must be completed before Task 2. Task 2 and Task 3 must be completed before Task 4.
+List the order in which tasks should be completed.
+```
+
+**Pitfalls:**
+- May require careful prompt design to represent complex graphs
+- The model may struggle with large or highly interconnected graphs

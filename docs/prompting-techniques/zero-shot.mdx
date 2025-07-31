@@ -1,0 +1,28 @@
+---
+title: Zero-Shot Prompting
+slug: /prompting-techniques/zero-shot
+sidebar_position: 2
+description: Ask the model to perform a task without providing examples.
+---
+
+Zero-shot prompting asks the model to complete a task directly, without showing any examples.
+
+**Use when:**
+- The task is simple or well-understood by the model
+- You want a quick answer without context
+
+**Pattern:**
+Ask the model to perform a task in a single instruction.
+
+**Examples:**
+```text
+Translate the following sentence to French: "Where is the library?"
+```
+```text
+Summarize this meeting transcript in three bullet points:
+[Paste transcript here]
+```
+
+**Pitfalls:**
+- May produce less accurate results for complex or ambiguous tasks
+- Lacks context for nuanced instructions

@@ -1,0 +1,30 @@
+---
+title: Retrieval-Augmented Generation (RAG)
+slug: /prompting-techniques/rag
+sidebar_position: 9
+description: Incorporate external knowledge into model responses.
+---
+
+Retrieval-Augmented Generation (RAG) combines language models with external data sources to provide more accurate and up-to-date answers.
+
+**Use when:**
+- The task requires information not in the model’s training data
+- You need factual or current knowledge
+
+**Pattern:**
+1. Retrieve relevant documents or facts from an external source.
+2. Provide the retrieved information to the model as context for answering the question.
+
+**Examples:**
+```text
+Given the following article, answer: What are the main causes of climate change?
+[Paste article here]
+```
+```text
+Using the provided company knowledge base, summarize the latest product updates.
+[Insert knowledge base excerpt]
+```
+
+**Pitfalls:**
+- Quality depends on the relevance of retrieved data
+- May require integration with search or database tools

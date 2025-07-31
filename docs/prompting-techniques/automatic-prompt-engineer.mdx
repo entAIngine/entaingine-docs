@@ -1,0 +1,28 @@
+---
+title: Automatic Prompt Engineer
+slug: /prompting-techniques/automatic-prompt-engineer
+sidebar_position: 11
+description: Use models to generate and refine prompts automatically.
+---
+
+Automatic Prompt Engineer (APE) uses language models to create, test, and refine prompts for specific tasks.
+
+**Use when:**
+- You want to optimize prompts for better performance
+- Manual prompt design is time-consuming or difficult
+
+**Pattern:**
+1. Ask the model to generate several candidate prompts for a task.
+2. Test and select the most effective prompt, possibly iterating further.
+
+**Examples:**
+```text
+Generate three different prompts to extract key points from a news article.
+```
+```text
+Suggest improved prompts for summarizing customer feedback more accurately.
+```
+
+**Pitfalls:**
+- May require human review to select the best prompt
+- Can be resource-intensive if many iterations are needed

@@ -1,0 +1,30 @@
+---
+title: Generated Knowledge
+slug: /prompting-techniques/generated-knowledge
+sidebar_position: 6
+description: Use model-generated facts or context to improve responses.
+---
+
+Generated knowledge prompting first asks the model to generate relevant facts or context, then uses that information to answer the main question.
+
+**Use when:**
+- The task requires background knowledge or context
+- You want to improve answer quality by providing supporting information
+
+**Pattern:**
+1. Ask the model to list relevant facts or context.
+2. Use those facts in a follow-up prompt to answer the main question.
+
+**Examples:**
+```text
+List three facts about the Amazon rainforest.
+Now, using those facts, explain why the Amazon is important for the environment.
+```
+```text
+What are the key features of electric vehicles?
+Based on these features, what are the main advantages of electric vehicles over gasoline cars?
+```
+
+**Pitfalls:**
+- May introduce errors if generated facts are incorrect
+- Requires careful prompt design to maintain relevance

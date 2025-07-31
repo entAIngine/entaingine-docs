@@ -1,0 +1,29 @@
+---
+title: Active Prompt
+slug: /prompting-techniques/active-prompt
+sidebar_position: 12
+description: Dynamically adjust prompts based on feedback or context.
+---
+
+Active prompting adapts the prompt in real time based on model feedback or changing context.
+
+**Use when:**
+- The task requires iterative refinement or adaptation
+- You want to improve results by responding to model output
+
+**Pattern:**
+1. Submit an initial prompt and review the output.
+2. Adjust the prompt based on feedback or errors, and repeat as needed.
+
+**Examples:**
+```text
+Initial prompt: "Summarize this article."
+If the summary is too long, follow up: "Make it more concise."
+```
+```text
+Ask the model to generate a quiz. If the questions are too difficult, prompt: "Make the questions easier."
+```
+
+**Pitfalls:**
+- Can be time-consuming if many iterations are needed
+- Requires careful tracking of changes and feedback
