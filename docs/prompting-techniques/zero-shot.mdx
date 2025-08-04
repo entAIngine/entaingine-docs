@@ -1,0 +1,68 @@
+---
+title: Zero-Shot Prompting
+slug: /prompting-techniques/zero-shot
+sidebar_position: 2
+description: Ask the model to perform a task without providing examples.
+---
+
+![Zero-Shot CoT Framework](/img/prompting-techniques/zero-cot.png)
+
+Zero-Shot Prompting is a technique where a language model is asked to perform a task without being given any explicit examples or demonstrations. Instead, the model relies on its pre-trained knowledge and the clarity of the instruction to generate a response. This approach is especially useful for straightforward tasks or when you want to quickly test a model’s generalization ability.
+
+Zero-shot prompting is foundational in prompt engineering and is often the first step before exploring more advanced techniques like few-shot or chain-of-thought prompting.
+
+## Use When
+- The task is simple, well-known, or commonly encountered by language models.
+- You want to quickly test a model’s ability to generalize.
+- There is no need to guide the model with specific examples or demonstrations.
+
+## Pattern
+Directly instruct the model to perform a task using a clear, concise prompt. Avoid providing any examples or demonstrations in the prompt.
+
+## Examples
+
+### Example 1: Sentiment Classification
+```text
+Classify the text into neutral, negative, or positive. Text: I think the vacation is okay.
+```
+*Model output:*
+```
+Neutral
+```
+
+### Example 2: Translation
+```text
+Translate the following sentence to French: "Where is the library?"
+```
+*Model output:*
+```
+Où est la bibliothèque ?
+```
+
+### Example 3: Code Explanation
+```text
+Explain what this Python function does:
+```python
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+```
+```
+*Model output:*
+```
+This function calculates the nth number in the Fibonacci sequence using recursion. It returns the input number if it's 0 or 1, otherwise it adds the two preceding Fibonacci numbers. For example, fibonacci(5) would return 5 (the sequence: 0, 1, 1, 2, 3, 5).
+```
+
+## Benefits
+- **Simplicity:** No need to curate or maintain example sets.
+- **Speed:** Quick to implement and test.
+- **Generalization:** Useful for tasks that are well-represented in the model’s training data.
+
+## Pitfalls
+- May produce less accurate results for complex or ambiguous tasks.
+- Lacks context for nuanced or domain-specific instructions.
+- Performance can vary depending on how well the task matches the model’s pre-training.
+
+## References
+- Brown, T. B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P., ... & Amodei, D. (2020). [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165). *NeurIPS 2020*.

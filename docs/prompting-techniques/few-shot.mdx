@@ -1,0 +1,116 @@
+---
+title: Few-Shot Prompting
+slug: /prompting-techniques/few-shot
+sidebar_position: 3
+description: Guide the model with a few examples to shape its output.
+---
+
+Few-Shot Prompting is a technique where the model is provided with a small number of high-quality examples (typically 2–5) before being asked to perform a similar task. By seeing these demonstrations, the model can better understand the desired output format, style, or logic, leading to improved performance—especially for tasks that are less common or more complex.
+
+Few-shot prompting is a core method in prompt engineering, enabling in-context learning and adaptation without retraining the model.
+
+## Use When
+- The task benefits from context or demonstration.
+- You want to guide the model’s style, format, or logic.
+- The model struggles with zero-shot performance.
+
+## Pattern
+Show 2–5 examples of input-output pairs, then prompt the model to continue in the same way.
+
+## Examples
+
+### Example 1: Capital Cities (from Brown et al., 2020)
+```text
+Q: What is the capital of France?
+A: Paris
+Q: What is the capital of Germany?
+A: Berlin
+Q: What is the capital of Italy?
+A:
+```
+*Model output:*
+```
+Rome
+```
+
+### Example 2: Grammar Correction
+```text
+Correct the grammar:
+Input: "She go to school every day."
+Output: She goes to school every day.
+Input: "They is playing outside."
+Output:
+```
+*Model output:*
+```
+They are playing outside.
+```
+
+### Example 3: Sentiment Analysis (new)
+```text
+Classify the sentiment:
+Text: "I love this product!"
+Sentiment: Positive
+Text: "The service was disappointing."
+Sentiment: Negative
+Text: "It was okay, nothing special."
+Sentiment:
+```
+*Model output:*
+```
+Neutral
+```
+
+## Benefits
+- **Improved accuracy:** Demonstrations help the model generalize to new but similar tasks.
+- **Control:** You can steer the model’s output style, logic, or format.
+- **Flexibility:** Works for a wide range of tasks, from classification to generation.
+
+## ⚠️ Pitfalls
+- Too many examples can exceed context limits
+- Examples should be relevant, clear, and diverse
+- The model may overfit to the examples if they are not representative
+
+:::warning Important
+Choose diverse, high-quality examples that represent the full scope of your task. 2-5 examples are usually optimal!
+:::
+
+## Few-Shot vs Zero-Shot Comparison
+
+The following diagram illustrates the key differences between approaches:
+
+```
+ZERO-SHOT PROMPTING:
+┌─────────────────────────────────────┐
+│ Task: "Classify sentiment: 'I love  │
+│ this product!' "                    │
+│                                     │
+│ Model: (relies on pre-training only)│
+│ Output: "Positive"                  │
+└─────────────────────────────────────┘
+
+FEW-SHOT PROMPTING:
+┌─────────────────────────────────────┐
+│ Examples:                           │
+│ "Great service!" → Positive         │
+│ "Terrible quality" → Negative       │
+│ "It's okay" → Neutral              │
+│                                     │
+│ Task: "Classify sentiment: 'I love  │
+│ this product!' "                    │
+│                                     │
+│ Model: (learns from examples)       │
+│ Output: "Positive" (more confident) │
+└─────────────────────────────────────┘
+
+Benefits of Few-Shot:
+• Better accuracy through examples
+• Consistent formatting
+• Domain-specific adaptation
+• Reduced ambiguity
+```
+
+This demonstrates how examples provide crucial context that improves model performance and consistency.
+
+## References
+- Brown, T. B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P., ... & Amodei, D. (2020). [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165). *NeurIPS 2020*.

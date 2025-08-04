@@ -1,0 +1,267 @@
+---
+title: Active Prompt
+slug: /prompting-techniques/active-prompt
+sidebar_position: 12
+description: Dynamically adjust prompts based on feedback, uncertainty, or changing context.
+---
+
+![Active-Prompt Framework](/img/prompting-techniques/active-prompt.png)
+
+Active Prompt is a dynamic prompting technique that adapts and refines prompts in real-time based on model feedback, uncertainty estimation, or changing context. 
+
+:::note Dynamic Prompting 🔄
+Rather than using static prompts, this approach creates an interactive loop where prompts are continuously optimized based on observed performance and outcomes.
+:::
+
+Rather than using static prompts, this approach creates an interactive loop where prompts are continuously optimized based on observed performance and outcomes.
+
+This technique is particularly valuable in scenarios where the optimal prompt formulation isn't known in advance or where task requirements may evolve during execution. Active prompting draws inspiration from active learning principles, where the most informative examples are selected for learning.
+
+## Core Principles
+
+Active prompting operates on several key principles:
+
+1. **Feedback Integration**: Using model outputs to inform prompt adjustments
+2. **Uncertainty Awareness**: Identifying when the model is less confident and needs guidance
+3. **Adaptive Refinement**: Iteratively improving prompts based on performance metrics
+4. **Context Sensitivity**: Adjusting prompts as task context or requirements change
+
+## Implementation Strategies
+
+### Uncertainty-Based Active Prompting
+
+This approach identifies cases where the model exhibits high uncertainty and applies targeted prompt modifications:
+
+```text
+Initial prompt: "Classify this email as spam or not spam: [EMAIL TEXT]"
+
+Model response: "I'm not entirely certain, but this seems like spam because..."
+
+Follow-up prompt: "Focus on these specific indicators when classifying:
+1. Suspicious sender addresses
+2. Urgent language patterns
+3. Requests for personal information
+Now classify: [EMAIL TEXT]"
+```
+
+### Performance-Based Adaptation
+
+Prompts are refined based on observed accuracy or quality metrics:
+
+```text
+Initial prompt: "Translate this sentence to French: [SENTENCE]"
+Accuracy: 60%
+
+Refined prompt: "Translate this English sentence to French, paying attention to:
+- Proper verb conjugation
+- Correct article usage (le/la/les)
+- Formal vs informal tone
+Sentence: [SENTENCE]"
+Accuracy: 85%
+```
+
+### Error-Driven Refinement
+
+When specific types of errors are detected, prompts are adjusted to address them:
+
+```text
+Initial prompt: "Solve this math problem: [PROBLEM]"
+Common error: Calculation mistakes
+
+Enhanced prompt: "Solve this math problem step by step:
+1. Identify what is being asked
+2. List the given information
+3. Show each calculation step
+4. Double-check your arithmetic
+Problem: [PROBLEM]"
+```
+
+## Advanced Techniques
+
+### Multi-Round Active Prompting
+
+This involves multiple rounds of prompt refinement with systematic evaluation:
+
+```text
+Round 1: Basic prompt
+"Summarize the main points of this research paper."
+
+Evaluation: Too technical, missed key insights
+
+Round 2: Refined prompt
+"Summarize this research paper in simple terms, focusing on:
+1. The main research question
+2. Key findings
+3. Practical implications"
+
+Evaluation: Better accessibility, still missing context
+
+Round 3: Final prompt
+"You are explaining research to a general audience. Summarize this paper by:
+1. Starting with why this research matters
+2. Explaining the main discovery in simple terms
+3. Describing what this means for everyday people
+4. Keeping technical jargon to a minimum"
+```
+
+### Context-Aware Active Prompting
+
+Prompts adapt based on changing context or user needs:
+
+```text
+Context: Customer service chatbot
+
+Morning prompts (high volume):
+"Provide quick, efficient responses to customer inquiries. Be helpful but concise."
+
+Evening prompts (complex issues):
+"Take time to thoroughly understand customer concerns. Provide detailed explanations and step-by-step solutions."
+
+Weekend prompts (escalated issues):
+"Handle this customer inquiry with extra care. They may be frustrated from waiting. Be empathetic and provide comprehensive assistance."
+```
+
+### Confidence-Threshold Active Prompting
+
+Adjusts prompts based on model confidence scores:
+
+```text
+High confidence response (>90%):
+Use standard prompt
+
+Medium confidence (60-90%):
+Add: "Double-check your reasoning and consider alternative interpretations."
+
+Low confidence (<60%):
+Add: "Think step by step. If uncertain, explain what additional information would help you provide a better answer."
+```
+
+## Practical Applications
+
+### Content Generation
+
+```text
+Task: Write a product description
+
+Initial prompt: "Write a product description for [PRODUCT]"
+Output evaluation: Too generic
+
+Active refinement: "Write a compelling product description that:
+- Highlights unique selling points
+- Addresses customer pain points
+- Uses emotional language to connect with buyers
+- Includes specific benefits, not just features
+Product: [PRODUCT]"
+```
+
+### Code Review and Programming
+
+```text
+Initial prompt: "Review this code for bugs"
+Common issue: Misses subtle logic errors
+
+Enhanced prompt: "Perform a thorough code review focusing on:
+1. Logic errors and edge cases
+2. Performance implications
+3. Security vulnerabilities
+4. Code readability and maintainability
+5. Adherence to best practices
+For each issue found, explain the problem and suggest a fix."
+```
+
+### Educational Applications
+
+```text
+Student struggling with concept X:
+
+Adaptive prompt sequence:
+1. "Explain [CONCEPT] simply"
+2. If still confused: "Use an analogy to explain [CONCEPT]"
+3. If still struggling: "Break down [CONCEPT] into 3 basic steps with examples"
+4. Final approach: "Create a visual representation or diagram to illustrate [CONCEPT]"
+```
+
+## Implementation Framework
+
+### Monitoring and Metrics
+
+Effective active prompting requires systematic monitoring:
+
+- **Response Quality**: Accuracy, relevance, completeness
+- **User Satisfaction**: Feedback scores, engagement metrics
+- **Efficiency**: Response time, number of iterations needed
+- **Consistency**: Variance in outputs across similar inputs
+
+### Feedback Mechanisms
+
+Various methods for collecting feedback to drive prompt adaptation:
+
+1. **Explicit Feedback**: Direct user ratings or corrections
+2. **Implicit Feedback**: Click-through rates, time spent reading
+3. **Automated Metrics**: Similarity to gold standards, confidence scores
+4. **A/B Testing**: Comparing performance across prompt variations
+
+### Adaptation Algorithms
+
+Simple algorithms for prompt modification:
+
+```text
+If accuracy < threshold:
+    Add more specific instructions
+If response too verbose:
+    Add length constraints
+If missing key information:
+    Add explicit requirements for that information
+If inconsistent outputs:
+    Add examples or formatting guidelines
+```
+
+## Best Practices
+
+### Design Principles
+
+- **Start Simple**: Begin with basic prompts and add complexity as needed
+- **Monitor Continuously**: Track performance metrics to identify improvement opportunities
+- **Document Changes**: Keep records of what modifications work and why
+- **Test Systematically**: Use controlled experiments to validate improvements
+
+### Common Patterns
+
+- **Incremental Enhancement**: Make small, targeted improvements rather than complete rewrites
+- **Context Preservation**: Maintain successful elements while modifying problematic aspects
+- **User-Centric**: Focus on improving outcomes that matter to end users
+- **Scalable Solutions**: Design adaptations that can work across similar tasks
+
+### Risk Management
+
+- **Avoid Overfitting**: Don't optimize too heavily for specific examples
+- **Maintain Robustness**: Ensure improvements don't break performance on edge cases
+- **Control Complexity**: Keep prompts understandable and maintainable
+- **Version Control**: Track prompt versions to enable rollbacks if needed
+
+## Integration with Other Techniques
+
+Active prompting can be combined with:
+
+- **Few-shot learning**: Dynamically select the most relevant examples
+- **Chain-of-thought**: Adjust reasoning instructions based on task complexity
+- **Self-consistency**: Modify sampling strategies based on confidence levels
+- **RAG**: Update retrieval queries based on initial response quality
+
+## Challenges and Limitations
+
+**Computational Overhead**: Multiple iterations increase costs and latency
+
+**Complexity Management**: Keeping track of adaptations can become unwieldy
+
+**Evaluation Difficulty**: Determining when adaptations actually improve performance
+
+**Stability Concerns**: Frequent changes may reduce consistency
+
+**User Experience**: Too many iterations may frustrate users expecting quick responses
+
+## References
+
+- Deng, M., et al. (2022). Active Prompting with Chain-of-Thought for Large Language Models. arXiv preprint arXiv:2302.12246
+- Zhang, Z., et al. (2022). Active Learning for Natural Language Processing: A Survey. ACM Computing Surveys
+- Settles, B. (2009). Active Learning Literature Survey. Computer Sciences Technical Report 1648, University of Wisconsin–Madison

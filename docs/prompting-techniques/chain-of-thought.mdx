@@ -1,0 +1,119 @@
+---
+title: Chain-of-Thought Prompting
+slug: /prompting-techniques/chain-of-thought
+sidebar_position: 4
+description: Guide language models to reason step by step for complex tasks.
+---
+
+Chain-of-Thought (CoT) Prompting is a technique that encourages language models to break down complex problems into a sequence of intermediate reasoning steps, rather than jumping directly to an answer. This approach enables models to "think out loud," improving accuracy, transparency, and robustness—especially for tasks requiring logical or multi-step reasoning.
+
+Introduced by [Wei et al. (2022)](https://arxiv.org/abs/2201.11903), CoT has become a foundational method for eliciting reasoning in large language models (LLMs) and is widely used in research and industry.
+
+## 🎯 Use When
+- The task requires logical, mathematical, or multi-step reasoning
+- You want the model to explain its process, not just give an answer
+- Problems are complex, ambiguous, or benefit from stepwise decomposition
+
+## 🔄 Pattern
+- **Few-Shot CoT:** Provide several examples of questions and detailed, step-by-step solutions. Then, present a new question for the model to solve in the same way
+- **Zero-Shot CoT:** Add a phrase like "Let's think step by step" to the prompt, encouraging the model to generate a reasoning chain even without examples
+
+## Examples
+
+### Example 1: Few-Shot CoT (Math Reasoning)
+```text
+Q: The odd numbers in this group add up to an even number: 4, 8, 9, 15, 12, 2, 1.
+A: Adding all the odd numbers (9, 15, 1) gives 25. The answer is False.
+
+Q: The odd numbers in this group add up to an even number: 15, 32, 5, 13, 82, 7, 1.
+A: Adding all the odd numbers (15, 5, 13, 7, 1) gives 41. The answer is False.
+
+Q: The odd numbers in this group add up to an even number: 17, 10, 19, 4, 8, 12, 24.
+A: Adding all the odd numbers (17, 19) gives 36. The answer is True.
+
+Q: The odd numbers in this group add up to an even number: 16, 11, 14, 4, 8, 13, 24.
+A: Adding all the odd numbers (11, 13) gives 24. The answer is True.
+
+Q: The odd numbers in this group add up to an even number: 17, 9, 10, 12, 13, 4, 2.
+A:
+```
+
+### Example 2: Zero-Shot CoT
+```text
+I went to the market and bought 10 apples. I gave 2 apples to the neighbor and 2 to the repairman. I then bought 5 more apples and ate 1. How many apples did I remain with?
+
+Let's think step by step.
+```
+*Model output:*
+```
+First, you started with 10 apples.
+You gave away 2 apples to the neighbor and 2 to the repairman, so you had 6 apples left.
+Then you bought 5 more apples, so now you had 11 apples.
+Finally, you ate 1 apple, so you would remain with 10 apples.
+```
+
+### Example 3: Applied Physics (new)
+```text
+A 12 kg object is in free fall for 4 seconds. What is the force exerted, given gravity is 9.8 m/s²?
+
+Let's think step by step.
+```
+*Model output:*
+```
+The force exerted by an object in free fall is F = m × a.
+Here, m = 12 kg, a = 9.8 m/s².
+F = 12 × 9.8 = 117.6 N.
+The force is 117.6 Newtons.
+```
+
+## Variants
+- **Zero-Shot CoT:** Add “Let’s think step by step” to the prompt for reasoning without examples ([Kojima et al., 2022](https://arxiv.org/abs/2205.11916)).
+- **Automatic CoT:** Use LLMs to generate diverse reasoning chains for demonstrations ([Zhang et al., 2022](https://arxiv.org/abs/2210.02406)).
+- **Tabular CoT:** Structure reasoning in a table for clarity in data analysis tasks.
+
+## Benefits
+- **Improved accuracy:** Stepwise reasoning reduces errors in complex tasks.
+- **Explainability:** Makes the model’s logic transparent and auditable.
+- **Robustness:** Helps identify and correct mistakes in intermediate steps.
+
+## ⚠️ Pitfalls
+- May generate unnecessary details for simple tasks
+- Can increase response length and cost
+- Effectiveness depends on the quality and diversity of provided examples (for few-shot)
+
+:::tip Pro Tip
+Start with simple examples and gradually increase complexity. Quality examples are more important than quantity!
+:::
+
+## Visual Comparison
+
+![Chain-of-Thought Prompting Illustration](/img/prompting-techniques/cot.png)
+
+The diagram above illustrates the key difference between standard prompting and Chain-of-Thought prompting. CoT prompting enables intermediate reasoning steps that make the process transparent and more reliable, as demonstrated in this example:
+
+```
+Standard Prompting:
+Question: "What is 15 + 27 × 3?"
+Model: "96"
+
+Chain-of-Thought Prompting:
+Question: "What is 15 + 27 × 3?"
+Model: "I need to follow order of operations.
+        First: 27 × 3 = 81
+        Then: 15 + 81 = 96
+        Therefore: 96"
+```
+
+## Automatic Chain-of-Thought
+
+![Auto-CoT Framework](/img/prompting-techniques/auto-cot.png)
+
+Automatic Chain-of-Thought (Auto-CoT) extends the basic CoT approach by automatically generating reasoning demonstrations. Instead of requiring manual creation of exemplars, Auto-CoT uses the model itself to generate diverse reasoning chains, reducing human effort while maintaining or improving performance.
+
+## References
+- Wei, J., Wang, X., Schuurmans, D., Bosma, M., Ichter, B., Xia, F., ... & Zhou, D. (2022). [Chain-of-Thought Prompting Elicits Reasoning in Large Language Models](https://arxiv.org/abs/2201.11903). *NeurIPS 2022*.
+- Kojima, T., Gu, S. S., Reid, M., Matsuo, Y., & Ishihata, M. (2022). [Large Language Models are Zero-Shot Reasoners](https://arxiv.org/abs/2205.11916).
+- Zhang, Z., Zhang, A., Li, M., & Smola, A. (2022). [Automatic Chain of Thought Prompting in Large Language Models](https://arxiv.org/abs/2210.02406).
+- Hendrycks, D., Burns, C., Kadavath, S., Arora, A., Basart, S., Tang, E., ... & Steinhardt, J. (2021). [Measuring Massive Multitask Language Understanding](https://arxiv.org/abs/2009.03300).
+- Ahn, M., et al. (2022). [Language Models as Zero-Shot Planners: Extracting Actionable Knowledge for Embodied Agents](https://arxiv.org/abs/2201.07207).
+- Wei, J., et al. (2022). [Emergent Abilities of Large Language Models](https://arxiv.org/abs/2206.07682).

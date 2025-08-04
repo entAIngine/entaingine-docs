@@ -1,0 +1,71 @@
+---
+title: ART (Automatic Reasoning and Tool-use)
+slug: /prompting-techniques/art
+sidebar_position: 10
+description: Combine reasoning with tool use for complex tasks.
+---
+
+![ART Framework Overview](/img/prompting-techniques/ART.png)
+
+ART (Automatic Reasoning and Tool-use) is a prompting technique that enables language models to reason through a problem and use external tools (such as calculators, APIs, or databases) to reach a solution. 
+
+:::info Why ART? 🛠️
+By interleaving reasoning steps with tool calls, ART allows models to handle tasks that require both logical thinking and access to external information or computation.
+:::
+
+By interleaving reasoning steps with tool calls, ART allows models to handle tasks that require both logical thinking and access to external information or computation.
+
+This approach is especially useful for complex, multi-step tasks where the model’s internal knowledge is insufficient or where precise calculations or up-to-date data are needed.
+
+## 🎯 Use When
+- The task requires both reasoning and external computation or lookup
+- You want the model to use tools to improve accuracy or access real-time data
+- The problem involves multi-step workflows or integration with external systems
+
+## Pattern
+1. Ask the model to break down the problem and identify when to use a tool.
+2. At each step, use the tool’s output to inform the next reasoning step.
+3. Continue until the final answer is reached.
+
+## Examples
+
+### Example 1: Mathematical Calculation with Tool Use
+```text
+Calculate the square root of 245. (Model decides to use a calculator tool.)
+```
+*Model output:*
+```
+Step 1: Recognize that the square root of 245 is not a simple integer.
+Step 2: Use calculator tool: sqrt(245) ≈ 15.652.
+Final answer: 15.652
+```
+
+### Example 2: Real-Time Data Lookup (new)
+```text
+Find the current weather in Paris and suggest an outfit for today. (Model queries a weather API, then reasons about clothing.)
+```
+*Model output:*
+```
+Step 1: Query weather API for Paris: 22°C, sunny.
+Step 2: Based on the weather, suggest wearing light clothing and sunglasses.
+Final answer: Wear a t-shirt, shorts, and sunglasses.
+```
+
+## ✅ Benefits
+- **Accuracy:** Leverages external tools for precise computation or up-to-date information
+- **Flexibility:** Can be adapted to a wide range of tasks and tool integrations
+- **Transparency:** Makes the reasoning and tool-use process explicit
+
+## Performance Results
+
+![ART Performance Results](/img/prompting-techniques/ART2.png)
+
+The performance comparison above demonstrates ART's effectiveness across various reasoning and tool-use benchmarks.
+
+## ⚠️ Pitfalls
+- Requires integration with external tools or APIs
+- May fail if tool use is not well-defined or if the tool is unavailable
+- Can increase complexity and latency
+
+## References
+- Paranjape, B., Lundberg, S., Singh, S., Hajishirzi, H., Zettlemoyer, L., & Ribeiro, M. T. (2023). [ART: Automatic Multi-step Reasoning and Tool-use for Large Language Models](https://arxiv.org/abs/2303.09014).

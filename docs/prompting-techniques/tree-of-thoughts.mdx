@@ -1,0 +1,114 @@
+---
+title: Tree of Thoughts
+slug: /prompting-techniques/tree-of-thoughts
+sidebar_position: 8
+description: Explore multiple reasoning paths for better solutions.
+---
+
+Tree of Thoughts (ToT) is an advanced prompting technique that enables language models to explore multiple reasoning paths in parallel, rather than following a single chain of thought. 
+
+:::note Advanced Technique 🌳
+ToT organizes intermediate steps as nodes in a tree structure, allowing the model to consider, compare, and evaluate different solutions before selecting the best one.
+:::
+
+By organizing intermediate steps as nodes in a tree structure, ToT allows the model to consider, compare, and evaluate different solutions before selecting the best one.
+
+This approach is inspired by human problem-solving strategies, where multiple hypotheses or strategies are explored before making a decision. ToT is especially useful for complex, open-ended, or strategic tasks that benefit from branching exploration.
+
+## Use When
+- The task is open-ended or benefits from exploring alternatives.
+- You want to improve solution quality by comparing multiple reasoning paths.
+- The problem involves planning, strategy, or multi-step decision-making.
+
+## Pattern
+1. Ask the model to generate several possible solutions or reasoning paths (branches).
+2. Evaluate or compare the options to select the best one.
+3. Optionally, use search algorithms (e.g., breadth-first, depth-first) to explore the tree.
+
+## Examples
+
+### Example 1: Puzzle Solving
+```text
+List three different ways to solve this puzzle, then choose the best approach and explain why.
+```
+*Model output:*
+```
+1. Use logical deduction to eliminate impossible options.
+2. Try a brute-force search of all possible combinations.
+3. Apply a known heuristic to narrow down the choices.
+Best approach: Logical deduction is most efficient for this puzzle because it reduces the solution space quickly.
+```
+
+### Example 2: Strategy Comparison (new)
+```text
+Propose several strategies for increasing user engagement on a website. Compare their pros and cons and recommend one.
+```
+*Model output:*
+```
+Strategies:
+- Add gamification elements (badges, points)
+- Improve content personalization
+- Launch a referral program
+
+Comparison:
+- Gamification can boost short-term engagement but may lose effectiveness over time.
+- Personalization increases relevance but requires more data.
+- Referral programs can drive growth but depend on existing user satisfaction.
+
+Recommendation: Start with content personalization for sustainable engagement, then layer in gamification.
+```
+
+## Benefits
+- **Exploration:** Considers multiple solutions, increasing the chance of finding the best one.
+- **Transparency:** Makes the reasoning process and trade-offs explicit.
+- **Adaptability:** Can be combined with search algorithms for systematic exploration.
+
+## Pitfalls
+- Can increase response length and complexity.
+- May require additional evaluation to select the best path.
+- Computationally intensive for large or deep trees.
+
+## Tree of Thoughts Structure
+
+![Tree of Thoughts Framework](/img/prompting-techniques/TOT.png)
+
+The diagram above illustrates the Tree of Thoughts framework for deliberate problem solving. The following shows how ToT explores multiple reasoning paths:
+
+```
+                    Initial Problem
+                         │
+           ┌─────────────┼─────────────┐
+           │             │             │
+       Thought 1     Thought 2     Thought 3
+      "Approach A"   "Approach B"   "Approach C"
+           │             │             │
+      ┌────┼────┐   ┌────┼────┐   ┌────┼────┐
+      │    │    │   │    │    │   │    │    │
+     T1.1 T1.2 T1.3 T2.1 T2.2 T2.3 T3.1 T3.2 T3.3
+      │    │    │   │    │    │   │    │    │
+    [✓]  [✗]  [?]  [✓]  [✓]  [✗]  [✗]  [✓]  [?]
+
+Where:
+[✓] = Promising path (continue exploring)
+[✗] = Dead end (prune this branch)  
+[?] = Uncertain (needs more evaluation)
+
+Selected paths: T1.1, T2.1, T2.2, T3.2
+                   │     │     │     │
+               Continue exploring best candidates
+                         │
+                   Final Solution
+```
+
+This branching structure allows systematic exploration of the solution space while pruning unpromising paths.
+
+![Tree of Thoughts Game of 24 Example](/img/prompting-techniques/TOT2.png)
+
+The example above shows ToT applied to the Game of 24, demonstrating how the framework evaluates different mathematical operations and reasoning paths.
+
+![Tree of Thoughts Performance Comparison](/img/prompting-techniques/TOT3.png)
+
+The performance comparison above demonstrates ToT's significant improvements over other prompting methods across various reasoning tasks.
+
+## References
+- Yao, S., Yu, D., Zhao, J., Shafran, I., Griffiths, T. L., Cao, Y., & Narasimhan, K. (2023). [Tree of Thoughts: Deliberate Problem Solving with Large Language Models](https://arxiv.org/abs/2305.10601).

@@ -1,0 +1,476 @@
+---
+title: Graph Prompting
+slug: /prompting-techniques/graph-prompting
+sidebar_position: 17
+description: Structure information as graphs to enable relational reasoning and complex problem solving.
+---
+
+Graph Prompting is a technique that represents information, relationships, and dependencies as graph structures (nodes and edges) to enable language models to perform sophisticated relational reasoning.
+
+:::info What is Graph Prompting? 🕸️
+Think of it like creating a visual map of relationships - instead of describing connections in text, you draw them as a graph with dots (nodes) and lines (edges) to help the model understand complex systems better.
+:::
+
+By explicitly modeling connections between entities, this approach helps models understand complex systems, navigate multi-step relationships, and solve problems that require understanding of network structures.
+
+This technique is particularly powerful for problems involving social networks, knowledge graphs, workflow dependencies, causal relationships, and any domain where understanding connections between entities is crucial for reasoning.
+
+## 🧩 Core Concepts
+
+Graph prompting leverages several fundamental graph theory concepts:
+
+:::note Key Building Blocks
+- **Nodes (Vertices)**: Represent entities, concepts, or states
+- **Edges**: Represent relationships, connections, or transitions between nodes  
+- **Directed vs Undirected**: Whether relationships have specific direction
+- **Weighted Graphs**: When relationships have associated strengths or costs
+- **Path Finding**: Discovering routes through the graph structure
+- **Subgraphs**: Focusing on specific portions of larger graph structures
+:::
+
+## Graph Representation Strategies
+
+### Explicit Graph Notation
+
+```text
+Social Network Analysis:
+
+Graph Structure:
+Nodes: [Alice, Bob, Charlie, Diana, Eve]
+Edges: 
+- Alice ↔ Bob (friends)
+- Bob ↔ Charlie (colleagues)
+- Charlie → Diana (mentor relationship)
+- Diana ↔ Eve (neighbors)
+- Alice → Eve (follows on social media)
+
+Question: What is the shortest path from Alice to Diana, and what types of relationships does it involve?
+
+Analysis:
+Path 1: Alice → Bob → Charlie → Diana (3 steps: friend → colleague → mentor)
+Path 2: Alice → Eve → Diana (2 steps: social media → neighbor)
+
+Answer: The shortest path is Alice → Eve → Diana (2 steps), involving a social media following relationship and a neighbor relationship.
+```
+
+### Adjacency Matrix Representation
+
+```text
+Project Dependency Analysis:
+
+Tasks: [A: Research, B: Design, C: Development, D: Testing, E: Deployment]
+
+Dependency Matrix (1 = dependency):
+    A  B  C  D  E
+A   0  1  0  0  0  (A must complete before B)
+B   0  0  1  0  0  (B must complete before C)
+C   0  0  0  1  0  (C must complete before D)
+D   0  0  0  0  1  (D must complete before E)
+E   0  0  0  0  0  (E has no dependencies)
+
+Question: What is the critical path and minimum project duration if each task takes 2 days?
+
+Analysis:
+Critical Path: A → B → C → D → E (linear dependency chain)
+Duration: 5 tasks × 2 days = 10 days minimum
+No parallelization possible due to sequential dependencies.
+
+Answer: The critical path is A→B→C→D→E with a minimum duration of 10 days.
+```
+
+### Hierarchical Graph Structures
+
+```text
+Organizational Decision Flow:
+
+Graph Structure:
+Level 1: [CEO]
+Level 2: [VP-Sales, VP-Engineering, VP-Marketing]
+Level 3: [Sales-Manager-A, Sales-Manager-B, Eng-Lead-1, Eng-Lead-2, Marketing-Manager]
+Level 4: [Sales-Rep-1, Sales-Rep-2, Sales-Rep-3, Developer-A, Developer-B, Designer, Content-Writer]
+
+Decision Flow Rules:
+- Budget decisions > $10K require CEO approval
+- Technical decisions require VP-Engineering → Eng-Lead → Developer chain
+- Sales strategies require VP-Sales → Sales-Manager → Sales-Rep input
+
+Question: What approval path is needed for a $15K software purchase decision that affects the engineering team?
+
+Analysis:
+Step 1: Identify decision type: Budget ($15K > $10K) + Technical impact
+Step 2: Budget approval path: Developer-A → Eng-Lead-1 → VP-Engineering → CEO
+Step 3: Technical input path: Developer-A → Eng-Lead-1 → VP-Engineering
+Step 4: Combine paths for comprehensive approval
+
+Answer: Required path is Developer-A → Eng-Lead-1 → VP-Engineering → CEO, ensuring both technical input and budget approval are obtained.
+```
+
+## Advanced Graph Prompting Techniques
+
+### Multi-Layer Graph Analysis
+
+```text
+Knowledge Graph Reasoning:
+
+Scientific Concept Network:
+Layer 1 (Fundamental): [Energy, Matter, Force, Motion]
+Layer 2 (Principles): [Conservation, Thermodynamics, Mechanics, Electromagnetism]
+Layer 3 (Applications): [Heat-Engines, Electric-Motors, Projectile-Motion, Wave-Propagation]
+
+Cross-layer Relationships:
+- Energy → Conservation → Heat-Engines
+- Force → Mechanics → Projectile-Motion
+- Energy → Electromagnetism → Electric-Motors
+
+Question: Explain how the concept of energy conservation applies to heat engines, showing the conceptual pathway.
+
+Analysis:
+Step 1: Start at Energy (fundamental concept)
+Step 2: Connect through Conservation (principle layer)
+Step 3: Apply to Heat-Engines (application layer)
+Step 4: Trace the reasoning pathway
+
+Explanation: Energy (fundamental) → Conservation principle states energy cannot be created or destroyed → Heat-Engines application: thermal energy converts to mechanical work, but total energy remains constant, leading to efficiency limitations described by thermodynamic cycles.
+```
+
+### Dynamic Graph Evolution
+
+```text
+Market Competition Dynamics:
+
+Initial State (Year 1):
+Companies: [TechCorp, InnovateCo, StartupX]
+Market Relationships:
+- TechCorp ↔ InnovateCo (direct competition)
+- StartupX → TechCorp (disruption threat)
+
+Evolution Rules:
+- Successful disruption creates new competitive edges
+- Market partnerships can shift competitive dynamics
+- Technology advancement changes relationship strengths
+
+Year 2 Evolution:
+- StartupX successfully disrupts TechCorp
+- InnovateCo partners with StartupX
+- New player MegaTech enters market
+
+Updated Graph:
+- StartupX ↔ TechCorp (now equal competitors)
+- InnovateCo ↔ StartupX (partnership cooperation)
+- MegaTech → All others (new disruption threat)
+
+Question: Predict Year 3 competitive landscape based on current trends.
+
+Prediction Analysis:
+Pattern 1: Partnerships strengthen against new threats
+Pattern 2: Technology disruption cycles continue
+Pattern 3: Market consolidation pressure increases
+
+Year 3 Prediction: Likely merger between InnovateCo and StartupX to compete against MegaTech, with TechCorp either joining alliance or being acquired.
+```
+
+### Weighted Graph Optimization
+
+```text
+Supply Chain Network Optimization:
+
+Network Nodes: [Supplier-A, Supplier-B, Warehouse-1, Warehouse-2, Distributor-X, Distributor-Y, Customer-Region-1, Customer-Region-2]
+
+Weighted Edges (Cost, Time, Reliability):
+- Supplier-A → Warehouse-1: (Cost: $5/unit, Time: 2 days, Reliability: 95%)
+- Supplier-A → Warehouse-2: (Cost: $7/unit, Time: 1 day, Reliability: 98%)
+- Supplier-B → Warehouse-1: (Cost: $4/unit, Time: 3 days, Reliability: 90%)
+- Warehouse-1 → Distributor-X: (Cost: $2/unit, Time: 1 day, Reliability: 97%)
+
+Question: Find the optimal path from suppliers to Customer-Region-1 considering a priority on reliability over cost.
+
+Multi-Criteria Analysis:
+Step 1: Weight criteria: Reliability (40%), Cost (35%), Time (25%)
+Step 2: Calculate weighted scores for each path
+Step 3: Identify optimal path considering all factors
+
+Path 1: Supplier-A → Warehouse-2 → Distributor-X → Customer-Region-1
+Score: (98% × 0.4) + (85% cost efficiency × 0.35) + (90% time efficiency × 0.25) = 91.45%
+
+Optimal path prioritizes high-reliability connections while maintaining reasonable cost and time performance.
+```
+
+## Problem-Solving Applications
+
+### Causal Reasoning Networks
+
+```text
+Root Cause Analysis:
+
+Problem Graph:
+Symptoms: [Website-Slow, High-CPU, Database-Timeout, User-Complaints]
+Potential Causes: [Memory-Leak, Database-Lock, Network-Congestion, Code-Bug, Hardware-Failure]
+
+Causal Relationships:
+- Memory-Leak → High-CPU → Website-Slow
+- Database-Lock → Database-Timeout → Website-Slow
+- Code-Bug → Memory-Leak OR Database-Lock
+- Network-Congestion → Database-Timeout
+- Hardware-Failure → High-CPU
+
+Observed Evidence:
+- Website-Slow: Yes
+- High-CPU: Yes
+- Database-Timeout: No
+- User-Complaints: Yes
+
+Question: What is the most likely root cause?
+
+Causal Analysis:
+Step 1: Work backwards from observed symptoms
+Step 2: Website-Slow + High-CPU + No Database-Timeout suggests CPU-related issue
+Step 3: High-CPU can be caused by Memory-Leak or Hardware-Failure
+Step 4: Memory-Leak is more likely if caused by Code-Bug (more common than hardware failure)
+
+Most Likely Root Cause: Code-Bug → Memory-Leak → High-CPU → Website-Slow
+```
+
+### Strategic Planning Networks
+
+```text
+Business Strategy Graph:
+
+Strategic Goals: [Market-Expansion, Revenue-Growth, Cost-Reduction, Innovation]
+Capabilities: [R&D-Team, Sales-Force, Manufacturing, Digital-Platform]
+Market Factors: [Competition, Demand, Technology-Trends, Regulations]
+
+Strategy Relationships:
+- R&D-Team → Innovation → Market-Expansion
+- Sales-Force → Revenue-Growth → Market-Expansion
+- Digital-Platform → Cost-Reduction → Revenue-Growth
+- Technology-Trends → Innovation → Competition-Advantage
+
+Resource Constraints:
+- R&D-Team bandwidth: 70% utilized
+- Sales-Force: Geographic limitations
+- Manufacturing: Capacity constraints
+- Digital-Platform: Technical debt issues
+
+Question: What strategic path maximizes revenue growth given current constraints?
+
+Strategic Analysis:
+Step 1: Identify unconstrained paths to Revenue-Growth
+Step 2: Sales-Force → Revenue-Growth (direct, but geographically limited)
+Step 3: Digital-Platform → Cost-Reduction → Revenue-Growth (constrained by technical debt)
+Step 4: R&D-Team → Innovation → Market-Expansion → Revenue-Growth (R&D has capacity)
+
+Optimal Strategy: Focus R&D capacity on innovation that enables geographic market expansion, leveraging available R&D bandwidth while working around sales and platform constraints.
+```
+
+### Network Flow Problems
+
+```text
+Information Propagation Analysis:
+
+Communication Network:
+Nodes: [HQ, Regional-Office-A, Regional-Office-B, Team-Lead-1, Team-Lead-2, Team-Lead-3, Individual-Contributors]
+
+Flow Capacities (messages per day):
+- HQ → Regional-Office-A: 50 messages/day
+- Regional-Office-A → Team-Lead-1,2: 20 messages/day each
+- Team-Lead → Individual-Contributors: 10 messages/day
+
+Information Priority:
+- Critical Updates: Must reach all nodes within 1 day
+- Routine Updates: Can take up to 3 days
+- Training Materials: Can take up to 7 days
+
+Question: Can the network handle 100 critical updates per day to all employees?
+
+Flow Analysis:
+Step 1: Map required flow from HQ to all endpoints
+Step 2: Identify bottlenecks in the network
+Step 3: Calculate maximum throughput
+Step 4: Compare with demand
+
+Bottleneck Analysis:
+- HQ can send 50 messages/day to Regional-Office-A
+- Regional-Office-A can forward 40 messages/day total to Team Leads
+- Bottleneck: Regional-Office-A (40 < 50 capacity)
+
+Answer: No, the network cannot handle 100 critical updates/day. Maximum throughput is limited to 40 messages/day by Regional-Office-A's forwarding capacity. Need to either increase Regional-Office-A capacity or add parallel communication paths.
+```
+
+## Implementation Best Practices
+
+### Graph Design Principles
+
+```text
+Effective Graph Representation:
+1. **Node Clarity**: Ensure each node represents a distinct, well-defined entity
+2. **Edge Semantics**: Clearly define what each edge type represents
+3. **Scope Management**: Include relevant nodes while avoiding unnecessary complexity
+4. **Relationship Types**: Distinguish between different types of connections
+5. **Directionality**: Be explicit about whether relationships are bidirectional
+```
+
+### Reasoning Strategies
+
+```text
+Systematic Graph Traversal:
+1. **Start Point Identification**: Clearly identify where reasoning begins
+2. **Path Exploration**: Consider multiple possible routes
+3. **Constraint Application**: Apply rules and limitations consistently
+4. **Validation Steps**: Verify that proposed paths are valid
+5. **Optimization Criteria**: Apply relevant optimization goals
+```
+
+### Common Graph Patterns
+
+```text
+Dependency Graphs: Task ordering, prerequisite relationships
+Hierarchy Graphs: Organizational structures, taxonomies
+Flow Networks: Resource allocation, information propagation
+Causal Graphs: Root cause analysis, impact assessment
+State Graphs: Process flows, decision trees
+```
+
+## Limitations and Challenges
+
+### Complexity Management
+
+**Scale Limitations**: Large graphs become difficult to represent and reason about in text format
+
+**Cognitive Load**: Complex graph structures can overwhelm both model and human reasoning capacity
+
+**Representation Fidelity**: Text-based graph descriptions may lose important structural information
+
+### Common Pitfalls
+
+```text
+Incomplete Graph Specification:
+Problem: Missing edges or nodes that affect reasoning
+Solution: Systematic enumeration of all relevant entities and relationships
+
+Ambiguous Relationships:
+Problem: Unclear edge semantics leading to misinterpretation
+Solution: Explicit definition of relationship types and properties
+
+Path Finding Errors:
+Problem: Missing valid paths or including invalid ones
+Solution: Systematic traversal with constraint checking
+```
+
+### Model Limitations
+
+**Graph Visualization**: Language models cannot directly visualize graph structures
+
+**Complex Algorithms**: May struggle with sophisticated graph algorithms
+
+**Large-Scale Analysis**: Performance degrades with very large or dense graphs
+
+**Dynamic Updates**: Difficulty tracking changes in graph structure over time
+
+## Integration with Other Techniques
+
+### Graph + Chain-of-Thought
+
+```text
+Combine graph structure with step-by-step reasoning:
+"Let me work through this graph step by step, starting from node A and examining each possible path..."
+```
+
+### Graph + Few-Shot Learning
+
+```text
+Provide examples of graph reasoning before presenting the main problem:
+Example 1: [Simple graph with clear reasoning]
+Example 2: [Similar complexity with solution]
+Now solve: [Target graph problem]
+```
+
+### Graph + ReAct
+
+```text
+Use graph structure to guide action selection:
+Thought: "Based on the graph, I need to explore path A-B-C"
+Action: Analyze relationship between A and B
+Observation: [Results inform next graph traversal step]
+```
+
+## Future Developments
+
+### Enhanced Graph Capabilities
+
+Research directions include:
+- **Visual Graph Integration**: Combining textual descriptions with actual graph visualizations
+- **Dynamic Graph Reasoning**: Handling graphs that change over time
+- **Probabilistic Graphs**: Incorporating uncertainty into graph relationships
+- **Multi-Modal Graphs**: Graphs that include different types of nodes and edges
+
+### Tool Integration
+
+- **Graph Visualization Tools**: Automatic generation of visual representations
+- **Graph Algorithms**: Integration with specialized graph computation libraries
+- **Database Integration**: Direct connection to graph databases
+- **Interactive Exploration**: Tools for dynamic graph manipulation and exploration
+
+## Graph Visualization Examples
+
+The following diagrams show different graph representation methods:
+
+### Simple Network Graph
+```
+Social Network Example:
+    Alice ──── Bob
+      │         │
+      │         │
+    Eve ──── Charlie ──── Diana
+              │
+            Frank
+            
+Relationships:
+• Alice ↔ Bob (friends)
+• Alice ↔ Eve (siblings)  
+• Bob ↔ Charlie (colleagues)
+• Charlie ↔ Diana (neighbors)
+• Charlie ↔ Frank (teammates)
+• Eve ↔ Charlie (classmates)
+```
+
+### Directed Process Flow
+```
+Task Dependencies:
+    [Start] → [Task A] → [Task C] → [End]
+                │           ↑
+                ▼           │
+             [Task B] ──────┘
+                │
+                ▼
+            [Task D]
+
+Rules:
+• Task A must complete before Task B and Task C
+• Task C requires both Task A and Task B  
+• Task D can run parallel to Task C
+```
+
+### Weighted Decision Tree
+```
+Investment Decision Graph:
+                [Invest $10K?]
+                /            \
+           (0.7)              (0.3)
+            /                    \
+    [High Risk]              [Low Risk]
+      /      \                /        \
+  (0.4)     (0.6)         (0.8)      (0.2)
+   /          \            /            \
+[+$50K]    [-$20K]    [+$5K]        [+$1K]
+
+Numbers in () represent probability weights
+```
+
+These visual representations help models understand relationships, dependencies, and decision pathways more effectively than pure text descriptions.
+
+## References
+
+- Liu, J., et al. (2023). Graph-of-Thought: Solving Elaborate Problems with Large Language Models. arXiv preprint arXiv:2308.09687
+- Yao, S., et al. (2023). Beyond Chain-of-Thought, Effective Graph-of-Thought Reasoning in Large Language Models. arXiv preprint arXiv:2305.16582
+- Wang, L., et al. (2023). Graph Neural Prompting with Large Language Models. arXiv preprint arXiv:2309.15427
+- Zhang, Y., et al. (2023). GraphPrompt: Unifying Pre-Training and Downstream Tasks for Graph Neural Networks. ACM Computing Surveys

@@ -1,0 +1,76 @@
+---
+title: Prompt Chaining
+slug: /prompting-techniques/prompt-chaining
+sidebar_position: 7
+description: Link multiple prompts to solve multi-step problems.
+---
+
+Prompt Chaining is a technique where complex tasks are broken down into a sequence of smaller, manageable steps, with each step handled by a separate prompt. The output of one prompt is used as the input for the next, allowing for multi-stage reasoning, workflow automation, or the construction of sophisticated pipelines.
+
+This approach is especially useful for tasks that are too complex for a single prompt or require intermediate outputs to be processed before reaching a final answer.
+
+## Use When
+- The task is too complex for a single prompt.
+- You want to structure multi-step reasoning or workflows.
+- Intermediate outputs need to be processed or validated before the final step.
+
+## Pattern
+1. Prompt the model for the first step.
+2. Use the output as input for the next step, and repeat as needed.
+3. Continue chaining prompts until the final answer is produced.
+
+## Examples
+
+### Example 1: Article Summarization and Key Takeaways
+```text
+Step 1: Summarize the following article.
+[Paste article]
+Step 2: List three key takeaways from the summary above.
+```
+*Model output:*
+```
+Summary: The article discusses the impact of renewable energy on global markets, highlighting recent trends and policy changes.
+Key takeaways:
+- Renewable energy adoption is accelerating worldwide.
+- Policy changes are driving investment in clean technologies.
+- Market dynamics are shifting in favor of sustainable solutions.
+```
+
+### Example 2: Content Creation Pipeline  
+```text
+Step 1: Create an outline for a blog post about "AI in Healthcare"
+Step 2: Write the introduction section based on the outline
+Step 3: Suggest three compelling images that would enhance this blog post
+```
+*Model output:*
+```
+Step 1 - Outline:
+I. Introduction - AI's transformative impact on healthcare
+II. Current applications (diagnostics, drug discovery, patient care)
+III. Benefits and challenges
+IV. Future outlook
+
+Step 2 - Introduction:
+Artificial Intelligence is revolutionizing healthcare by enhancing diagnostic accuracy, accelerating drug discovery, and personalizing patient care. From analyzing medical images to predicting patient outcomes, AI technologies are helping healthcare professionals make better decisions faster than ever before.
+
+Step 3 - Image suggestions:
+1. Doctor using AI diagnostic tool with patient scan
+2. Infographic showing AI applications in different medical fields
+3. Future concept image of AI-powered operating room
+```
+
+## Benefits
+- **Modularity:** Each step can be independently designed, tested, and reused.
+- **Clarity:** Breaks down complex tasks into understandable stages.
+- **Flexibility:** Allows for branching, validation, or error handling at each step.
+
+## Pitfalls
+- Errors can compound across steps if not managed carefully.
+- Requires careful management of intermediate outputs and prompt design.
+- Can increase latency and cost due to multiple model calls.
+
+## References
+
+- Wu, T., et al. (2022). [PromptChainer: Chaining Large Language Model Prompts through Visual Programming](https://arxiv.org/abs/2203.06566). *CHI 2022*.
+- Khot, T., et al. (2022). [Decomposed Prompting: A Modular Approach for Solving Complex Tasks](https://arxiv.org/abs/2210.02406). *ICLR 2023*.
+- Zhou, D., et al. (2022). [Least-to-Most Prompting Enables Complex Reasoning in Large Language Models](https://arxiv.org/abs/2205.10625). *ICLR 2023*.
