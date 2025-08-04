@@ -5,26 +5,107 @@ sidebar_position: 5
 description: Generate multiple solutions and select the most consistent answer.
 ---
 
-Self-consistency prompting generates several responses to the same prompt and selects the answer that appears most frequently or is most consistent.
+Self-Consistency is an advanced prompting technique designed to improve the reliability and accuracy of language model outputs, especially for complex reasoning tasks. 
 
-**Use when:**
-- The task is ambiguous or has multiple possible answers
-- You want to improve reliability by aggregating outputs
+:::tip Core Concept 🎯
+Instead of relying on a single response, generate multiple answers and pick the most frequent one!
+:::
 
-**Pattern:**
-Ask the model the same question multiple times, then choose the most common or consistent answer.
+Instead of relying on a single response, the model is prompted multiple times (often with different sampling seeds), and the most consistent answer among the outputs is selected as the final result.
 
-**Examples:**
+This approach was introduced by [Wang et al. (2022)](https://arxiv.org/abs/2203.11171) to address the variability and occasional errors in chain-of-thought (CoT) reasoning, particularly for arithmetic and commonsense reasoning tasks.
+
+## Use When
+- The task is ambiguous or has multiple possible answers.
+- You want to improve reliability by aggregating outputs.
+- The model’s responses vary significantly between runs.
+
+## Pattern
+1. Prompt the model with the same question multiple times (using temperature sampling or different seeds).
+2. Collect all generated answers.
+3. Select the most frequent or consistent answer as the final output.
+
+## Examples
+
+### Example 1: Arithmetic Reasoning (from Wang et al., 2022)
 ```text
-What is the next number in the sequence: 2, 4, 8, 16, ...?
-(Repeat the prompt several times and select the most frequent answer.)
+Q: When I was 6 my sister was half my age. Now I’m 70 how old is my sister?
 ```
-```text
-Classify this review as positive or negative:
-"The product exceeded my expectations."
-(Ask multiple times and use the majority label.)
+*Model outputs (sampled multiple times):*
+```
+- When I was 6, my sister was 3. Now I am 70, so she is 70 - 3 = 67. The answer is 67.
+- When I was 6, my sister was half my age, so she was 3. Now that I am 70, she is 70 - 3 = 67. The answer is 67.
+- When I was 6, my sister was half my age, so she was 3. Now I am 70, so she is 70/2 = 35. The answer is 35.
+```
+*Final answer (by majority):*
+```
+67
 ```
 
-**Pitfalls:**
-- Increases computational cost
-- May not resolve ambiguity if the model is inconsistent
+### Example 2: Sentiment Classification (new)
+```text
+Classify the sentiment of the following review: "The product exceeded my expectations."
+```
+*Model outputs (sampled multiple times):*
+```
+- Positive
+- Positive
+- Positive
+- Neutral
+```
+*Final answer (by majority):*
+```
+Positive
+```
+
+## Benefits
+- **Reliability:** Reduces the impact of random errors or outlier responses.
+- **Accuracy:** Aggregates multiple reasoning paths to find the most likely answer.
+- **Robustness:** Especially useful for tasks with inherent ambiguity or multiple valid solutions.
+
+## Pitfalls
+- Increases computational cost (requires multiple model runs).
+- May not resolve ambiguity if the model is inconsistent or biased.
+- Not always necessary for simple or deterministic tasks.
+
+## Self-Consistency Process
+
+The following diagram illustrates how self-consistency works:
+
+```
+Input Problem: "If a train travels 60 miles in 45 minutes, 
+               what's its speed in mph?"
+
+                Multiple Sampling Paths
+                         │
+    ┌──────────────┬─────┼─────┬──────────────┐
+    │              │     │     │              │
+    ▼              ▼     ▼     ▼              ▼
+Sample 1       Sample 2   │  Sample 3     Sample 4
+                          │
+"60 miles in    "45 min = │  "Speed =     "Distance = 60
+45 min = 3/4    0.75 hr   │  distance/    Time = 45 min
+hour. Speed =   Speed =   │  time =       = 0.75 hr
+60 ÷ 0.75 =     60/0.75 = │  60/0.75 =    Speed = 60/0.75
+80 mph"         80 mph"   │  80 mph"      = 80 mph"
+    │              │     │     │              │
+    ▼              ▼     ▼     ▼              ▼
+  80 mph         80 mph  │   80 mph        80 mph
+                         │
+                         ▼
+               ┌─────────────────┐
+               │  VOTE & SELECT  │
+               │                 │
+               │ 80 mph: ████    │ ← Most frequent
+               │ 75 mph: █       │ ← Outlier 
+               │ 85 mph: █       │ ← Outlier
+               └─────────────────┘
+                         │
+                         ▼
+                 Final Answer: 80 mph
+```
+
+This approach reduces errors by generating multiple reasoning paths and selecting the most consistent result.
+
+## References
+- Wang, X., Wei, J., Schuurmans, D., Le, Q. V., Chi, E., Narang, S., ... & Zhou, D. (2022). [Self-Consistency Improves Chain of Thought Reasoning in Language Models](https://arxiv.org/abs/2203.11171). *arXiv:2203.11171*.

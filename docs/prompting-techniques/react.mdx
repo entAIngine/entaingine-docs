@@ -1,36 +1,338 @@
 ---
-title: ReAct
+title: ReAct (Reasoning and Acting)
 slug: /prompting-techniques/react
 sidebar_position: 15
-description: Integrate reasoning and action for interactive tasks.
+description: Integrate reasoning and action in an iterative loop for complex problem-solving.
 ---
 
-ReAct prompting alternates between reasoning steps and taking actions, such as querying a tool or environment, to solve a problem interactively.
+ReAct (Reasoning and Acting) is a prompting technique that enables language models to interleave reasoning traces with task-specific actions in an iterative manner. Unlike traditional approaches that separate thinking and acting, ReAct creates a dynamic loop where reasoning informs action selection, and action results inform subsequent reasoning steps.
 
-**Use when:**
-- The task requires both reasoning and interaction with external tools or data
-- You want the model to explain its process as it acts
+Introduced by [Yao et al. (2022)](https://arxiv.org/abs/2210.03629), ReAct has proven particularly effective for tasks requiring both complex reasoning and interaction with external environments, tools, or knowledge sources. This approach enables more robust, interpretable, and flexible problem-solving capabilities.
 
-**Pattern:**
-1. Ask the model to reason about the problem.
-2. Take an action (e.g., query a tool), then continue reasoning based on the result.
+## Core Architecture
 
-**Examples:**
+ReAct operates through three fundamental components that work in continuous iteration:
+
+1. **Thought**: Internal reasoning about the current state and next steps
+2. **Action**: Specific operations performed in the environment (tool calls, queries, calculations)
+3. **Observation**: Results or feedback received from the action, which inform the next reasoning step
+
+This creates a feedback loop: **Thought → Action → Observation → Thought → Action → Observation...**
+
+## Implementation Framework
+
+### Basic ReAct Pattern
+
 ```text
-Question: What is the population of Japan?
-Thought: I need to look up the latest data.
-Action: Search for "current population of Japan."
-Observation: The population is about 125 million.
-Answer: The population of Japan is approximately 125 million.
-```
-```text
-Question: What’s the weather in New York?
-Thought: I should check a weather service.
-Action: Query weather API for New York.
-Observation: It’s 22°C and sunny.
-Answer: It’s 22°C and sunny in New York.
+Question: What is the current stock price of Tesla and how does it compare to its 52-week high?
+
+Thought: I need to find Tesla's current stock price and its 52-week high to make a comparison.
+Action: Search for "Tesla stock price current"
+Observation: Tesla (TSLA) is currently trading at $248.50
+
+Thought: Now I need to find Tesla's 52-week high to make the comparison.
+Action: Search for "Tesla TSLA 52-week high"
+Observation: Tesla's 52-week high is $299.29
+
+Thought: I can now calculate the difference and percentage to provide a comprehensive comparison.
+Action: Calculate (299.29 - 248.50) / 299.29 * 100
+Observation: Tesla is currently trading about 17% below its 52-week high
+
+Answer: Tesla is currently trading at $248.50, which is $50.79 (about 17%) below its 52-week high of $299.29.
 ```
 
-**Pitfalls:**
-- Requires integration with external tools or APIs
-- Can be complex to implement in practice
+### Multi-Tool Integration
+
+```text
+Question: Plan a 3-day trip to Paris with a budget of $1,500 for accommodation and activities.
+
+Thought: I need to break this down into accommodation costs, activity costs, and create a day-by-day itinerary within the budget.
+Action: Search for "Paris hotel prices 3 nights mid-range"
+Observation: Mid-range hotels in Paris cost approximately $150-200 per night
+
+Thought: With $450-600 for accommodation, I have $900-1050 left for activities. Let me find popular attractions and their costs.
+Action: Search for "Paris top attractions admission prices 2024"
+Observation: Eiffel Tower (€29), Louvre (€17), Notre-Dame area (free), Seine cruise (€15), Montmartre (free)
+
+Thought: I should create a day-by-day plan that balances paid attractions with free activities to stay within budget.
+Action: Calculate total for major paid attractions
+Observation: Key paid attractions total approximately €61 ($66) per person
+
+Thought: This leaves plenty of budget for meals, transportation, and additional activities. Let me create a structured itinerary.
+Action: Plan daily activities with cost breakdown
+Observation: Day 1: Louvre + Seine cruise ($32), Day 2: Eiffel Tower + Montmartre ($29), Day 3: Local neighborhoods + shopping (flexible budget)
+
+Answer: Here's a 3-day Paris itinerary within your $1,500 budget:
+- Accommodation: $500 (3 nights at mid-range hotel)
+- Major attractions: $90 (Louvre, Eiffel Tower, Seine cruise)
+- Remaining $910 for meals, local transport, shopping, and additional activities
+[Detailed daily itinerary follows...]
+```
+
+## Advanced ReAct Patterns
+
+### Error Recovery and Adaptive Reasoning
+
+```text
+Question: What's the fastest route from London to Edinburgh by train today?
+
+Thought: I need to check current train schedules and any service disruptions.
+Action: Search for "London to Edinburgh train schedule today"
+Observation: Error: Unable to access current train schedules
+
+Thought: The direct search failed. Let me try a different approach by checking the main rail operator's website.
+Action: Search for "LNER London Edinburgh train times"
+Observation: LNER operates direct services, journey time approximately 4 hours 30 minutes
+
+Thought: I have general information but need today's specific schedules. Let me try checking for service alerts.
+Action: Search for "UK rail disruptions today London Edinburgh"
+Observation: No major disruptions reported on the East Coast Main Line today
+
+Thought: Based on general schedules and lack of disruptions, I can provide typical journey information with a recommendation to check live times.
+Action: Compile standard schedule information
+Observation: Typical departures every 30 minutes during peak times, fastest journey is 4h 20m
+
+Answer: Based on available information, the fastest trains from London to Edinburgh typically take 4h 20m via LNER direct service. Trains run approximately every 30 minutes during peak times. I recommend checking live schedules on the LNER website for today's specific departure times, as I couldn't access real-time data.
+```
+
+### Multi-Step Problem Decomposition
+
+```text
+Question: A startup wants to launch in 3 cities simultaneously. They have $2M funding, need to hire 15 people per city, and want to break even in 18 months. Is this feasible?
+
+Thought: This is a complex feasibility analysis. I need to break it down into key cost components: hiring costs, operational expenses, revenue requirements, and timeline constraints.
+Action: Research average startup hiring costs and salaries by role
+Observation: Average startup employee costs range from $75K-150K annually including benefits and overhead
+
+Thought: With 45 total employees (15 per city), I need to calculate total personnel costs and factor in other operational expenses.
+Action: Calculate total annual personnel costs
+Observation: Conservative estimate: 45 employees × $100K average = $4.5M annually
+
+Thought: The annual personnel costs alone ($4.5M) exceed the total funding ($2M). This suggests immediate feasibility issues. Let me examine if revenue targets could offset this.
+Action: Calculate required monthly revenue to break even in 18 months
+Observation: To break even in 18 months with $4.5M annual costs: need ~$5.6M revenue in year 1.5
+
+Thought: The numbers indicate significant challenges. Let me explore alternative scenarios with reduced hiring or phased rollouts.
+Action: Model alternative scenarios (phased hiring, reduced headcount)
+Observation: Starting with 8 people per city reduces initial costs to ~$2.4M annually, more manageable with $2M funding
+
+Answer: The original plan is not feasible. With 45 employees costing ~$4.5M annually, the $2M funding is insufficient. Alternative recommendations:
+1. Start with 8 people per city (24 total) to reduce costs to ~$2.4M annually
+2. Consider phased city rollout rather than simultaneous launch
+3. Extend break-even timeline to 24-30 months
+4. Secure additional funding of $3-4M for the aggressive expansion plan
+```
+
+## Domain-Specific Applications
+
+### Research and Information Synthesis
+
+```text
+Research Question: What are the environmental impacts of cryptocurrency mining, and what solutions are being developed?
+
+Thought: This requires gathering information from multiple sources about environmental impacts, then researching current solutions and innovations.
+Action: Search for "cryptocurrency mining environmental impact 2024 studies"
+Observation: Studies show Bitcoin mining consumes ~150 TWh annually, significant carbon footprint
+
+Thought: I need specific data on carbon emissions and energy sources to quantify the impact.
+Action: Search for "Bitcoin carbon footprint CO2 emissions per transaction"
+Observation: Estimates range from 400-700kg CO2 per Bitcoin transaction, depending on energy mix
+
+Thought: Now I should investigate solutions and alternatives being developed.
+Action: Search for "sustainable cryptocurrency solutions proof of stake renewable energy"
+Observation: Solutions include: Proof-of-Stake consensus, renewable energy mining, carbon offset programs
+
+Thought: I should gather specific examples of implementation and their effectiveness.
+Action: Search for "Ethereum proof of stake energy reduction mining"
+Observation: Ethereum's transition to Proof-of-Stake reduced energy consumption by ~99.95%
+
+Answer: Cryptocurrency mining has significant environmental impacts, with Bitcoin alone consuming ~150 TWh annually and producing 400-700kg CO2 per transaction. Key solutions being implemented include:
+1. Consensus mechanism changes (Ethereum's PoS transition reduced energy use by 99.95%)
+2. Renewable energy adoption by mining operations
+3. Carbon offset programs and sustainable mining initiatives
+4. Development of more energy-efficient mining hardware
+[Detailed analysis continues...]
+```
+
+### Troubleshooting and Diagnosis
+
+```text
+Problem: Website is loading slowly for users in Europe but works fine for US users.
+
+Thought: This suggests a geographic performance issue. I need to identify potential causes like CDN configuration, server location, or network routing.
+Action: Check website loading times from different European locations
+Observation: London: 8.5s, Paris: 9.2s, Berlin: 7.8s (US baseline: 2.1s)
+
+Thought: The significant difference confirms geographic issues. Let me check CDN coverage and configuration.
+Action: Analyze CDN edge server locations and coverage
+Observation: CDN has limited European edge servers, most traffic routing through US east coast
+
+Thought: Poor CDN coverage explains the latency. I should also check for any Europe-specific DNS resolution issues.
+Action: Test DNS resolution times from European locations
+Observation: DNS resolution adds 1.2-1.8s delay from Europe vs 0.3s from US
+
+Thought: I've identified two main issues: insufficient CDN coverage and DNS latency. Let me formulate comprehensive solutions.
+Action: Research optimal CDN configurations for European users
+Observation: Recommendations include adding European edge servers, implementing geographic DNS routing
+
+Solution: The slow loading in Europe is caused by:
+1. Limited CDN edge servers in Europe (routing traffic to US)
+2. DNS resolution delays for European users
+
+Recommendations:
+1. Add CDN edge servers in major European cities (London, Frankfurt, Amsterdam)
+2. Implement geographic DNS routing
+3. Consider European data center deployment for critical assets
+4. Monitor performance improvements using European testing locations
+```
+
+## Implementation Best Practices
+
+### Structured Reasoning
+
+**Clear thought articulation**: Each reasoning step should be explicit and logical
+
+**Action specification**: Actions should be specific, measurable, and executable
+
+**Observation integration**: Results should be directly incorporated into subsequent reasoning
+
+### Error Handling and Robustness
+
+```text
+Thought: I need to search for information about X.
+Action: Search for "X information"
+Observation: Search failed due to network error
+
+Thought: Direct search failed. Let me try alternative approaches or use cached information I might have.
+Action: Try alternative search terms or fallback strategies
+Observation: [Result of fallback approach]
+
+This pattern ensures continued progress even when individual actions fail.
+```
+
+### Tool Integration Patterns
+
+**Tool selection reasoning**: Explicitly justify why specific tools are chosen
+
+**Result validation**: Cross-check important results using multiple tools when possible
+
+**Graceful degradation**: Have fallback options when preferred tools are unavailable
+
+## Measurement and Optimization
+
+### Performance Metrics
+
+- **Task completion rate**: Percentage of problems successfully solved
+- **Action efficiency**: Number of actions needed to reach solutions
+- **Reasoning quality**: Logical coherence and justification of steps
+- **Tool utilization**: Effectiveness of tool selection and usage
+
+### Common Failure Modes
+
+**Infinite loops**: Repeating the same action without progress
+
+**Tool misuse**: Using inappropriate tools for specific tasks
+
+**Reasoning gaps**: Insufficient justification for action selection
+
+**Context loss**: Failing to maintain awareness of previous observations
+
+## Integration with Other Techniques
+
+### ReAct + Chain-of-Thought
+
+Combining structured reasoning with interactive execution:
+
+```text
+Thought: Let me break this complex problem into steps... (CoT reasoning)
+Action: Execute first step using appropriate tool
+Observation: Results from first step
+Thought: Based on these results, the next logical step is... (continued CoT)
+```
+
+### ReAct + Self-Consistency
+
+Using multiple ReAct traces to verify solutions:
+
+```text
+Generate 3 different ReAct traces for the same problem, then compare final answers for consistency and confidence.
+```
+
+### ReAct + Few-Shot Learning
+
+Providing examples of effective ReAct patterns:
+
+```text
+Example 1: [Complete ReAct trace for similar problem]
+Example 2: [Another ReAct trace showing different approach]
+Now solve: [New problem using learned patterns]
+```
+
+## Future Developments
+
+### Automated Tool Discovery
+
+Research into enabling models to automatically discover and learn to use new tools during reasoning.
+
+### Multi-Agent ReAct
+
+Coordinating multiple ReAct agents to solve complex, distributed problems.
+
+### Continuous Learning
+
+Incorporating feedback from action outcomes to improve future reasoning and tool selection.
+
+### Hierarchical ReAct
+
+Implementing multiple levels of reasoning and action for complex, multi-layered problems.
+
+## ReAct Process Flow
+
+![ReAct Framework Illustration](/img/prompting-techniques/react.png)
+
+The diagram above illustrates the ReAct framework's core concept of synergizing reasoning and acting. The iterative ReAct process follows this pattern:
+
+```
+Problem Input
+     ↓
+┌─────────────┐
+│  THOUGHT    │ ← "I need to search for X"
+│  (Reasoning)│
+└─────────────┘
+     ↓
+┌─────────────┐
+│   ACTION    │ ← "Search for X"
+│  (Execute)  │
+└─────────────┘
+     ↓
+┌─────────────┐
+│ OBSERVATION │ ← "Found information Y"
+│  (Results)  │
+└─────────────┘
+     ↓
+┌─────────────┐
+│  THOUGHT    │ ← "Now I need to analyze Y"
+│  (Reasoning)│
+└─────────────┘
+     ↓
+┌─────────────┐
+│   ACTION    │ ← "Calculate Z from Y"
+│  (Execute)  │
+└─────────────┘
+     ↓
+┌─────────────┐
+│ OBSERVATION │ ← "Result is Z"
+│  (Results)  │
+└─────────────┘
+     ↓
+   ANSWER
+```
+
+This iterative cycle continues until the problem is solved, with each thought informing the next action, and each observation feeding into subsequent reasoning.
+
+## References
+
+- Yao, S., et al. (2022). ReAct: Synergizing Reasoning and Acting in Language Models. arXiv preprint arXiv:2210.03629
+- Schick, T., et al. (2023). Toolformer: Language Models Can Teach Themselves to Use Tools. arXiv preprint arXiv:2302.04761
+- Qin, Y., et al. (2023). Tool Learning with Foundation Models. arXiv preprint arXiv:2304.08354
+- Parisi, A., et al. (2022). TALM: Tool Augmented Language Models. arXiv preprint arXiv:2205.12255

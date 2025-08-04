@@ -2,27 +2,416 @@
 title: PAL (Program-Aided Language)
 slug: /prompting-techniques/pal
 sidebar_position: 14
-description: Use code or programs to help the model solve problems.
+description: Use code generation and execution to solve complex reasoning problems with high accuracy.
 ---
 
-PAL prompting involves generating code or structured logic to help solve a problem, then using the output to answer the original question.
+Program-Aided Language (PAL) is a prompting technique that leverages code generation to solve complex reasoning problems. Instead of asking language models to perform calculations or logical operations directly in natural language, PAL prompts the model to write executable code that solves the problem, then uses the code's output as the final answer.
 
-**Use when:**
-- The task involves calculations, logic, or structured data
-- You want to improve accuracy with programmatic reasoning
+Introduced by [Gao et al. (2022)](https://arxiv.org/abs/2211.10435), PAL significantly improves accuracy on mathematical reasoning, logical puzzles, and data manipulation tasks by offloading computational steps to reliable programming execution while maintaining the model's natural language understanding capabilities.
 
-**Pattern:**
-1. Ask the model to write code or logic to solve the problem.
-2. Use the code’s output as the answer.
+## Core Principles
 
-**Examples:**
+PAL operates on the understanding that:
+
+1. **Language models excel at code generation** but may struggle with precise calculations
+2. **Programming languages provide deterministic execution** that eliminates arithmetic errors
+3. **Complex problems can be decomposed** into code logic plus natural language reasoning
+4. **Verification is easier** when intermediate steps are explicit in code
+
+## How PAL Works
+
+The PAL process typically follows these steps:
+
+1. **Problem Analysis**: The model analyzes the problem and identifies computational components
+2. **Code Generation**: The model writes code that implements the necessary logic
+3. **Code Execution**: The generated code is executed in a programming environment
+4. **Result Integration**: The execution results are integrated into the final answer
+
+## Implementation Patterns
+
+### Mathematical Problem Solving
+
 ```text
-Write a Python function to calculate the factorial of 7. What is the result?
-```
-```text
-Generate a short script to count the number of words in this paragraph: "Artificial intelligence is transforming many industries."
+Problem: "Sarah has 3 boxes with 15 apples each. She gives away 1/3 of the total apples. How many apples does she have left?"
+
+PAL Approach:
+```python
+# Calculate total apples
+boxes = 3
+apples_per_box = 15
+total_apples = boxes * apples_per_box
+print(f"Total apples: {total_apples}")
+
+# Calculate apples given away
+fraction_given = 1/3
+apples_given = total_apples * fraction_given
+print(f"Apples given away: {apples_given}")
+
+# Calculate remaining apples
+remaining_apples = total_apples - apples_given
+print(f"Remaining apples: {remaining_apples}")
 ```
 
-**Pitfalls:**
-- Requires code execution environment
-- Errors in code generation can affect results
+Answer: Sarah has 30 apples left.
+```
+
+### Data Analysis and Statistics
+
+```text
+Problem: "Given the test scores [85, 92, 78, 96, 88, 91, 84], what is the mean, median, and standard deviation?"
+
+PAL Approach:
+```python
+import statistics
+import math
+
+scores = [85, 92, 78, 96, 88, 91, 84]
+
+# Calculate mean
+mean_score = statistics.mean(scores)
+print(f"Mean: {mean_score}")
+
+# Calculate median
+median_score = statistics.median(scores)
+print(f"Median: {median_score}")
+
+# Calculate standard deviation
+std_dev = statistics.stdev(scores)
+print(f"Standard deviation: {std_dev:.2f}")
+
+# Additional insights
+print(f"Range: {max(scores) - min(scores)}")
+print(f"Number of scores above average: {sum(1 for score in scores if score > mean_score)}")
+```
+
+This approach ensures accurate calculations while providing interpretable results.
+```
+
+### Logical Reasoning and Puzzles
+
+```text
+Problem: "In a classroom, every student likes either math or science (or both). 20 students like math, 15 students like science, and 8 students like both. How many students are in the classroom?"
+
+PAL Approach:
+```python
+# Use set theory principles
+math_lovers = 20
+science_lovers = 15
+both_lovers = 8
+
+# Students who like only math
+only_math = math_lovers - both_lovers
+print(f"Students who like only math: {only_math}")
+
+# Students who like only science
+only_science = science_lovers - both_lovers
+print(f"Students who like only science: {only_science}")
+
+# Total students using inclusion-exclusion principle
+total_students = only_math + only_science + both_lovers
+print(f"Total students: {total_students}")
+
+# Verification using set union formula
+verification = math_lovers + science_lovers - both_lovers
+print(f"Verification: {verification}")
+```
+
+Answer: There are 27 students in the classroom.
+```
+
+## Advanced PAL Techniques
+
+### Multi-Step Problem Decomposition
+
+```text
+Problem: "A company's revenue grows by 15% each year. If the current revenue is $200,000, what will the revenue be after 5 years, and how much total revenue will they earn over these 5 years?"
+
+PAL Approach:
+```python
+# Initial parameters
+initial_revenue = 200000
+growth_rate = 0.15
+years = 5
+
+# Calculate year-by-year revenue
+revenues = []
+total_revenue = 0
+
+for year in range(1, years + 1):
+    current_year_revenue = initial_revenue * (1 + growth_rate) ** year
+    revenues.append(current_year_revenue)
+    total_revenue += current_year_revenue
+    print(f"Year {year}: ${current_year_revenue:,.2f}")
+
+print(f"\nRevenue after 5 years: ${revenues[-1]:,.2f}")
+print(f"Total revenue over 5 years: ${total_revenue:,.2f}")
+
+# Calculate percentage increase
+percentage_increase = ((revenues[-1] - initial_revenue) / initial_revenue) * 100
+print(f"Total percentage increase: {percentage_increase:.1f}%")
+```
+```
+
+### Error Handling and Validation
+
+```text
+Problem: "Calculate the average speed for a trip where you drive 150 miles in 2.5 hours, then 200 miles in 3 hours."
+
+PAL Approach with validation:
+```python
+# Trip data
+trip1_distance = 150  # miles
+trip1_time = 2.5      # hours
+trip2_distance = 200  # miles
+trip2_time = 3        # hours
+
+# Validate inputs
+if trip1_time <= 0 or trip2_time <= 0:
+    raise ValueError("Time cannot be zero or negative")
+
+# Calculate total distance and time
+total_distance = trip1_distance + trip2_distance
+total_time = trip1_time + trip2_time
+
+print(f"Total distance: {total_distance} miles")
+print(f"Total time: {total_time} hours")
+
+# Calculate average speed
+average_speed = total_distance / total_time
+print(f"Average speed: {average_speed:.2f} mph")
+
+# Additional insights
+speed1 = trip1_distance / trip1_time
+speed2 = trip2_distance / trip2_time
+print(f"Speed for trip 1: {speed1:.2f} mph")
+print(f"Speed for trip 2: {speed2:.2f} mph")
+```
+```
+
+### Integration with External Libraries
+
+```text
+Problem: "Analyze the trend in the following monthly sales data and predict next month's sales: [12000, 13500, 11800, 14200, 15100, 13900, 16500, 17200]"
+
+PAL Approach:
+```python
+import numpy as np
+from scipy import stats
+import matplotlib.pyplot as plt
+
+# Sales data
+sales = [12000, 13500, 11800, 14200, 15100, 13900, 16500, 17200]
+months = list(range(1, len(sales) + 1))
+
+# Perform linear regression
+slope, intercept, r_value, p_value, std_err = stats.linregress(months, sales)
+
+print(f"Trend analysis:")
+print(f"Average monthly growth: ${slope:.2f}")
+print(f"R-squared: {r_value**2:.3f}")
+print(f"Correlation strength: {'Strong' if abs(r_value) > 0.7 else 'Moderate' if abs(r_value) > 0.5 else 'Weak'}")
+
+# Predict next month
+next_month = len(sales) + 1
+predicted_sales = slope * next_month + intercept
+print(f"\nPredicted sales for month {next_month}: ${predicted_sales:.2f}")
+
+# Calculate confidence interval (simplified)
+residuals = [sales[i] - (slope * (i+1) + intercept) for i in range(len(sales))]
+std_residual = np.std(residuals)
+confidence_interval = 1.96 * std_residual  # 95% confidence
+print(f"95% confidence interval: ${predicted_sales - confidence_interval:.2f} - ${predicted_sales + confidence_interval:.2f}")
+```
+```
+
+## Best Practices for PAL Implementation
+
+### Code Quality and Readability
+
+- **Use descriptive variable names** that clearly indicate what each variable represents
+- **Add comments** to explain complex logic or calculations
+- **Structure code logically** with clear steps and intermediate outputs
+- **Include print statements** to show intermediate results for transparency
+
+### Error Prevention and Handling
+
+- **Validate inputs** before performing calculations
+- **Handle edge cases** explicitly (e.g., division by zero, negative values where inappropriate)
+- **Use appropriate data types** (int vs float) based on the problem context
+- **Test with simple cases** to verify the logic works correctly
+
+### Integration Strategies
+
+```text
+Hybrid Natural Language + Code Approach:
+
+Problem: "Analyze customer satisfaction data"
+
+Step 1: Natural language reasoning
+"To analyze customer satisfaction, I need to calculate summary statistics and identify patterns."
+
+Step 2: Code implementation
+```python
+satisfaction_scores = [4.2, 3.8, 4.5, 3.9, 4.1, 3.7, 4.3, 4.0, 4.4, 3.6]
+# [calculation code here]
+```
+
+Step 3: Natural language interpretation
+"The analysis shows that customer satisfaction is generally positive with an average score of 4.05..."
+```
+
+## Domain-Specific Applications
+
+### Financial Calculations
+
+```text
+Compound interest, loan amortization, investment portfolio analysis:
+- Precise monetary calculations
+- Tax implications
+- Risk assessments
+- Return on investment calculations
+```
+
+### Scientific Computing
+
+```text
+Unit conversions, statistical analysis, experimental data processing:
+- Measurement conversions
+- Statistical significance testing
+- Data visualization
+- Hypothesis testing
+```
+
+### Operations Research
+
+```text
+Optimization problems, scheduling, resource allocation:
+- Linear programming
+- Scheduling algorithms
+- Inventory management
+- Cost optimization
+```
+
+## Limitations and Considerations
+
+### Execution Environment Requirements
+
+PAL requires a code execution environment, which may not always be available:
+- **Sandbox security**: Ensuring safe code execution
+- **Library availability**: Access to necessary programming libraries
+- **Performance constraints**: Execution time and memory limits
+
+### Code Generation Quality
+
+The effectiveness of PAL depends on the model's ability to generate correct code:
+- **Syntax errors**: May require debugging and correction
+- **Logic errors**: Can lead to incorrect results despite syntactically correct code
+- **Edge case handling**: May miss important boundary conditions
+
+### When NOT to Use PAL
+
+PAL may not be appropriate for:
+- Simple arithmetic that doesn't require external execution
+- Purely conceptual or philosophical questions
+- Tasks requiring real-time interaction or dynamic user input
+- Problems where the reasoning process is more important than the final answer
+
+## Integration with Other Techniques
+
+### PAL + Chain-of-Thought
+
+Combining structured reasoning with programmatic execution:
+
+```text
+"Let me think through this step by step, then write code to verify my reasoning..."
+1. Analyze the problem structure
+2. Identify the mathematical relationships
+3. Write code to implement the solution
+4. Interpret the results in context
+```
+
+### PAL + Self-Consistency
+
+Using multiple code implementations to verify results:
+
+```text
+Generate 3 different code approaches to solve the same problem, then compare results for consistency.
+```
+
+### PAL + Few-Shot Learning
+
+Providing examples of effective code patterns for similar problems:
+
+```text
+Example 1: [Problem type A with code solution]
+Example 2: [Problem type A with code solution]
+Now solve: [New problem of type A]
+```
+
+## Future Developments
+
+Research directions for improving PAL:
+
+- **Automated debugging**: Self-correcting code generation
+- **Multi-language support**: Choosing optimal programming languages for different problem types
+- **Interactive execution**: Real-time code modification and testing
+- **Visual integration**: Combining code with charts and visualizations
+
+## PAL Workflow Diagram
+
+![PAL Program-Aided Language Models Framework](/img/prompting-techniques/pal.png)
+
+The diagram above shows the PAL (Program-aided Language Models) framework that leverages language models to generate programming language statements. The following illustrates the PAL process:
+
+```
+Problem Input: "Calculate compound interest for $1000 at 5% for 3 years"
+    │
+    ▼
+┌─────────────────────────────────────────────────────┐
+│              LANGUAGE MODEL                         │
+│ "I need to write code to solve this step by step"   │
+└─────────────────────────────────────────────────────┘
+    │
+    ▼
+┌─────────────────────────────────────────────────────┐
+│                CODE GENERATION                      │
+│                                                     │
+│ ```python                                           │
+│ principal = 1000                                    │
+│ rate = 0.05                                         │
+│ time = 3                                            │
+│ compound_interest = principal * (1 + rate) ** time  │
+│ final_amount = compound_interest                    │
+│ interest_earned = final_amount - principal          │
+│ print(f"Final amount: ${final_amount:.2f}")         │
+│ print(f"Interest earned: ${interest_earned:.2f}")   │
+│ ```                                                 │
+└─────────────────────────────────────────────────────┘
+    │
+    ▼
+┌─────────────────────────────────────────────────────┐
+│              CODE EXECUTION                         │
+│                                                     │
+│ Output:                                             │
+│ Final amount: $1157.63                              │
+│ Interest earned: $157.63                            │
+└─────────────────────────────────────────────────────┘
+    │
+    ▼
+┌─────────────────────────────────────────────────────┐
+│              RESULT INTEGRATION                     │
+│                                                     │
+│ "Based on the calculation, $1000 invested at 5%    │
+│ annual compound interest for 3 years will grow to  │
+│ $1157.63, earning $157.63 in interest."            │
+└─────────────────────────────────────────────────────┘
+```
+
+This workflow ensures mathematical accuracy while maintaining natural language understanding.
+
+## References
+
+- Gao, L., et al. (2022). PAL: Program-aided Language Models. arXiv preprint arXiv:2211.10435
+- Chen, W., et al. (2022). Program of Thoughts Prompting: Disentangling Computation from Reasoning for Numerical Reasoning Tasks. arXiv preprint arXiv:2211.12588
+- Austin, J., et al. (2021). Program Synthesis with Large Language Models. arXiv preprint arXiv:2108.07732
+- Li, Y., et al. (2022). Competition-Level Code Generation with AlphaCode. Science
